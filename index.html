@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Календарь событий</title>
+	<style>
+* {
+	box-sizing: border-box;
+}
+html {
+	height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0;
+    background: #e8f3fc;
+    font-family: sans-serif;
+    flex-direction: column;
+    margin-left: 20%;
+}
+#title {
+    margin: 0;
+    font-size: 25px;
+    padding: 10px;
+}
+#auth {
+    display: flex;
+}
+#auth button {
+    border: none;
+    background: none;
+    padding: 15px;
+    font-size: 20px;
+    line-height: 20px;
+    cursor: pointer;
+}
+#auth button:hover {
+    background: #c1d0eb;
+}
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    margin-bottom: 20px;
+    background: #d0e1ff;
+}
+.container {
+	display: flex;
+	width: 80%;
+	margin-top: 20px;
+}
+.calendar {
+	width: 60%;
+	background-color: white;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.events {
+	width: 35%;
+	margin-left: 5%;
+	background-color: white;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+	color: #333;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+th, td {
+	padding: 10px;
+	text-align: center;
+}
+th {
+	background-color: #E6DBC5;
+	color: white;
+}
+td {
+	background-color: #f9f9f9;
+	border: 1px solid #ddd;
+}
+td.active {
+	background-color: #ffeb3b;
+}
+.tag {
+	display: inline-block;
+	margin-right: 10px;
+	padding: 5px 10px;
+	border-radius: 5px;
+	color: white;
+}
+.day-events {
+	margin-top: 20px;
+	color: #999;
+}
+.buttons {
+	margin-top: 20px;
+	text-align: center;
+}
+.button {
+	display: inline-block;
+	padding: 10px 20px;
+	margin: 0 10px;
+	background-color: #4CAF50;
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+}
+.button:hover {
+	background-color: #45a049;
+}
+.upcoming-events {
+	margin-top: 20px;
+}
+.upcoming-events ul {
+	list-style-type: none;
+	padding: 0;
+}
+.upcoming-events li {
+	margin-bottom: 10px;
+}
+.upcoming-events span {
+	color: #4CAF50;
+	margin-right: 5px;
+}
+.tags p {
+	border-radius: 10px;
+	padding: 8px;
+	display: inline-block;
+	border-style: solid;
+	cursor: pointer;
+}
+.tags {
+	opacity: 0;
+	justify-content: space-around;
+	display: none;
+	transition: opacity 0.5s;
+}
+div:target {
+	display: flex;
+}
+	</style>
+</head>
+<body>
+
+<div id="header">
+    <h1 id="title">Hackathon App</h1>
+    <div id="auth">
+        <button id="login">Вход</button>
+        <button id="register">Регистрация</button>
+    </div>
+</div>
+
+<div class="container">
+	<div class="calendar" id="calendar">
+		<h2>Календарь</h2>
+		<table>
+			<thead>
+			<tr>
+				<th>Пн</th>
+				<th>Вт</th>
+				<th>Ср</th>
+				<th>Чт</th>
+				<th>Пт</th>
+				<th>Сб</th>
+				<th>Вс</th>
+			</tr>
+			</thead>
+			<tbody id="calendar-root"></tbody>
+		</table>
+	<script type="text/javascript">
+function createCalendar(root) {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth(); // Текущий месяц (0 - январь, 11 - декабрь)
+
+    const firstDayOfMonth = new Date(year, month, 1); // Первый день месяца
+    const lastDayOfMonth = new Date(year, month + 1, 0); // Последний день месяца
+
+    let row = document.createElement('tr');
+
+    const firstDayWeekday = (firstDayOfMonth.getDay() + 6) % 7; // Преобразование дня недели (чтобы Пн был 0)
+    for (let i = 0; i < firstDayWeekday; i++) {
+        row.appendChild(document.createElement('td'));
+    }
+
+    for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
+        const td = document.createElement('td');
+        if (day==now.getDate()) {td.style.backgroundColor = '#FF8728'}
+        td.textContent = day;
+        row.appendChild(td);
+        if ((day + firstDayWeekday) % 7 === 0) {
+            root.appendChild(row);
+            row = document.createElement('tr');
+        }
+    }
+
+    for (let i = 0; i < 7 - lastDayOfMonth.getDay(); i++) {
+        const td = document.createElement('td');
+        row.appendChild(td);
+    }
+    root.appendChild(row);
+}
+
+createCalendar(document.getElementById('calendar-root'))
+	</script>
+		<div class="day-events">
+			Сегодня нет событий
+		</div>
+	</div>
+	<div class="events">
+		<h2>Ближайшие события:</h2>
+		<div class="upcoming-events">
+			<ul>
+				<li><span>22.09</span>Хакатон Лекция</li>
+				<li><span>22.09</span>Польза и Польза аниме</li>
+			</ul>
+		</div>
+		<div class="buttons">
+			<a href="#" class="button">Добавить событие</a>
+			<a href="#filters" onclick='let f=document.querySelector(".tags");console.log(f.style.opacity);if (f.style.opacity==1) {f.style.opacity = 0;} else {f.style.opacity = 1;}' class="button">Фильтры</a>
+			<div class="tags" id='filters'>
+				<p style='border-color: rgba(0,17,229,1);background-color: rgba(0,17,229,.2);'>Программирование</p>
+				<p style='border-color: rgba(255,6,222,1);background-color: rgba(255,6,222,.2);'>Семья</p>
+				<p style='border-color: rgba(0,228,36,1);background-color: rgba(0,228,36,.2);'>Окружение</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
