@@ -1,0 +1,17 @@
+<style>
+    .block {
+        opacity: 1;
+        transition: opacity 0.5s;
+    }
+    .hidden {
+        opacity: 0;
+    }
+</style>
+<div class="block">Block</div>
+<button id="btn">Hide/show</button>
+<script>
+    const block = document.querySelector('.block');
+    document.querySelector('#btn').addEventListener('click', function() {
+        block.classList.toggle('hidden');
+    });
+</script>

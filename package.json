@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "name": "hackathon-app",
+  "scripts": {
+    "run": "node src/index.js"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.7"
+  }
+}
