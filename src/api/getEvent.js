@@ -1,6 +1,6 @@
 import { dbGet } from '../db.js';
 
-export async function get(db, { search }) {
+export async function get(db, { userId, search }) {
     const check = checkProps(['id'], search);
     if (check) return [400, { error: check }];
 
@@ -8,6 +8,7 @@ export async function get(db, { search }) {
     if (!event) return [404, { error: 'Событие не найдено.' }];
     return [200, {
         ...event,
+        joined: userId ? !!(await dbGet(db, 'SELECT id FROM event_users WHERE user_id = ? AND event_id = ?', userId, search.id))[0] !== undefined : undefined,
         tags: (await dbGet(db, 'SELECT tag_id FROM event_tags WHERE event_id = ?', search.id)).map(tag => tag.tag_id)
     }];
 }

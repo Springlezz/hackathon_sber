@@ -3,7 +3,8 @@ import { dbRun } from '../db.js';
 
 export async function post(db, { userId, body }) {
     if (userId === null) return [401, { error: 'Пользователь не авторизован.' }];
-    if ((await dbGet(db, 'SELECT role FROM users WHERE id = ?', userId))[0].role === 0) return [401, { error: 'Недостаточно прав для совершения действия.' }];
+    const [{ role }] = await dbGet(db, 'SELECT role FROM users WHERE id = ?', userId);
+    if (role === 0) return [401, { error: 'Недостаточно прав для совершения действия.' }];
     const check = checkProps(['title', 'description', 'location', 'time', 'tags'], body);
     if (check) return [400, { error: check }];
 
