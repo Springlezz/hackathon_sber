@@ -25,8 +25,11 @@ const tables = {
         'title TEXT NOT NULL',
         'description TEXT NOT NULL',
         'time INTEGER NOT NULL',
+        'duration INTEGER NOT NULL',
         'location TEXT NOT NULL',
         'creator INTEGER NOT NULL', // user_id, speaker
+        'confirmed INTEGER NOT NULL DEFAULT 0',
+        'accepted INTEGER NOT NULL DEFAULT 0',
         'FOREIGN KEY (creator) REFERENCES users (id) ON DELETE CASCADE'
     ],
     event_tags: [

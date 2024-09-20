@@ -4,7 +4,7 @@ import { dbGet, dbRun } from '../db.js';
 export async function post(db, { userId, body }) {
     if (userId === null) return [401, { error: 'Пользователь не авторизован.' }];
     const [{ role }] = await dbGet(db, 'SELECT role FROM users WHERE id = ?', userId);
-    if (role === 0) return [401, { error: 'Недостаточно прав для совершения действия.' }];
+    if (role === 0) return [403, { error: 'Недостаточно прав для совершения действия.' }];
     const check = checkProps(['id'], body);
     if (check) return [400, { error: check }];
 
