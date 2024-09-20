@@ -9,7 +9,7 @@ export async function get(db, { search }) {
     if (search.tags) {
         const eventTags = search.tags.split(',');
         for (const tag of eventTags) {
-            if (!isNoNegInt(tag)) return [401, { error: 'Неверный идентификатор тега.' }];
+            if (!isNoNegInt(tag)) return [400, { error: 'Неверный идентификатор тега.' }];
         }
 
         const sql = `

@@ -8,8 +8,8 @@ export async function post(db, { userId, body }) {
     if (check) return [400, { error: check }];
 
     const [{ password }] = await dbGet(db, 'SELECT password FROM users WHERE id = ?', userId);
-    if (password !== hashPassword(body.oldPassword)) return [401, { error: 'Неверный пароль.' }];
-    if (body.password !== body.password2) return [401, { error: 'Пароли не совпадают.' }];
+    if (password !== hashPassword(body.oldPassword)) return [400, { error: 'Неверный пароль.' }];
+    if (body.password !== body.password2) return [400, { error: 'Пароли не совпадают.' }];
 
     await dbRun(db, 'UPDATE users SET password = ? WHERE id = ?', hashPassword(body.password), userId);
 
