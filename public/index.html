@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Hackathon App</title>
         <link rel="stylesheet" href="/styles.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
         {{head}}
     </head>
     <body>
@@ -17,6 +18,26 @@
         </div>
         <div id="main">
             <div id="content">{{content}}</div>
+            <div id="right">
+                <div id="events">
+                    <h2>Ближайшие события:</h2>
+                    <div class="upcoming-events">
+                        <ul>
+                            <li><span>22.09</span>Хакатон - закрытие</li>
+                            <li><span>23.09</span>14:10 - Численные методы</li>
+                        </ul>
+                    </div>
+                    <div class="buttons">
+                        <a href="#" class="button">Добавить событие</a>
+                        <a onclick="clickFilters();" class="button" style="cursor: pointer;">Фильтры</a>
+                        <div id="filters">
+                            <p onclick='selectTag("prog")' style='border-color: rgba(0,17,229,1);background-color: rgba(0,17,229,.2);'>Программирование</p>
+                            <p onclick='selectTag("family")' style='border-color: rgba(255,6,222,1);background-color: rgba(255,6,222,.2);'>Семья</p>
+                            <p onclick='selectTag("env")' style='border-color: rgba(0,228,36,1);background-color: rgba(0,228,36,.2);'>Окружение</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

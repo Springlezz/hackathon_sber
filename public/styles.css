@@ -66,11 +66,12 @@ h3, h1, h2 {
 }
 #right {
     display: flex;
-    margin: auto;
+    height: 100%;
     max-width: 1000px;
     min-height: calc(100% - 90px);
 
     width: 400px;
+    height: 100%;
     margin-left: 20px;
     padding: 20px;
     background: white;
@@ -118,7 +119,6 @@ label {
 #events {
     background-color: white;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #calendar table {

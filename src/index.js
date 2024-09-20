@@ -24,6 +24,7 @@ const pages = {
     '/': 'main',
     '/login/': 'login',
     '/register/': 'register',
+    '/create-event/': 'create-event'
 };
 
 function getBody(req) {
