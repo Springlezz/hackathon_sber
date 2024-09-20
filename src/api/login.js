@@ -1,7 +1,7 @@
-import { createHash } from 'crypto';
 import checkProps from '../checkProps.js';
 import { dbGet } from '../db.js';
 import { createSession } from '../session.js';
+import { hashPassword } from '../utils.js';
 
 export async function post(db, { userId, body }) {
     if (userId !== null) return [401, { error: 'Вы уже вошли в систему.' }];
@@ -10,7 +10,7 @@ export async function post(db, { userId, body }) {
 
     const [user] = await dbGet(db, 'SELECT * FROM users WHERE email = ?', body.email);
     if (!user) return [401, { error: 'Пользователь не найден.' }];
-    if (user.password !== createHash('sha256').update(body.password).digest('hex')) return [401, { error: 'Неверный пароль.' }];
+    if (user.password !== hashPassword(body.password)) return [401, { error: 'Неверный пароль.' }];
 
     const [token, expires] = await createSession(db, user.id);
     return [200, {}, {

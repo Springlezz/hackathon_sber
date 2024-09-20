@@ -1,7 +1,7 @@
-import { createHash } from 'crypto';
 import checkProps from '../checkProps.js';
 import { dbGet, dbRun } from '../db.js';
 import { createSession } from '../session.js';
+import { hashPassword } from '../utils.js';
 
 export async function post(db, { userId, body }) {
     if (userId !== null) return [401, { error: 'Вы уже вошли в систему.' }];
@@ -12,7 +12,7 @@ export async function post(db, { userId, body }) {
     if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(body.email)) return [401, { error: 'Некорректная почта.' }];
     if (body.password !== body.password2) return [401, { error: 'Пароли не совпадают.' }];
 
-    const [, { lastID }] = await dbRun(db, 'INSERT INTO users (email, first_name, second_name, third_name, country, city, password) VALUES (?, ?, ?, ?, ?, ?, ?)', body.email, body.firstName, body.secondName, body.thirdName, body.country, body.city, createHash('sha256').update(body.password).digest('hex'));
+    const [, { lastID }] = await dbRun(db, 'INSERT INTO users (email, first_name, second_name, third_name, country, city, password) VALUES (?, ?, ?, ?, ?, ?, ?)', body.email, body.firstName, body.secondName, body.thirdName, body.country, body.city, hashPassword(body.password));
 
     const [token, expires] = await createSession(db, lastID);
     return [200, {}, {
