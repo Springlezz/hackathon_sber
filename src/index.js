@@ -41,9 +41,9 @@ function getBody(req) {
 function parseBody(body) {
     return Object.fromEntries(body.split('&').map(a => a.split('=').map(decodeURIComponent)));
 }
-async function getUserId(req) {
+function getToken(req) {
     if (req.headers.cookie?.includes('sessionToken=')) {
-        return await getSession(db, req.headers.cookie.match(/sessionToken=([^;]+)/)[1]);
+        return req.headers.cookie.match(/sessionToken=([^;]+)/)[1];
     }
     return null;
 }
@@ -72,6 +72,7 @@ createServer(function(req, res) {
 
     const url = new URL(req.url, 'http://localhost');
     let path = url.pathname;
+    const token = getToken(req);
     if (path.startsWith('/api/')) {
         const search = Object.fromEntries(url.search.slice(1).split('&').map(a => a.split('=').map(b => decodeURIComponent(b))));
         import(`./api/${path.slice(5)}.js`).then(async function(module) {
@@ -89,8 +90,8 @@ createServer(function(req, res) {
                 }
 
                 const [code, resp, cookies] = await module[method](db, {
-                    userId: await getUserId(req),
-                    search,
+                    userId: await getSession(db, token),
+                    search, token,
                     body: parsedBody
                 });
                 send(code, {
@@ -107,7 +108,7 @@ createServer(function(req, res) {
                 case '/login/':
                     Promise.all([
                         import('./api/login.js'),
-                        getBody(req), getUserId(req)
+                        getBody(req), getSession(db, token)
                     ]).then(([login, body, userId]) => login.post(db, { userId, body: parseBody(body) })).then(function([code, resp, cookies]) {
                         if (code === 200) {
                             res.writeHead(302, { Location: '/', 'Set-Cookie': serializeCookies(cookies) }).end();
@@ -122,7 +123,7 @@ createServer(function(req, res) {
                 case '/register/':
                     Promise.all([
                         import('./api/register.js'),
-                        getBody(req), getUserId(req)
+                        getBody(req), getSession(db, token)
                     ]).then(([register, body, userId]) => register.post(db, { userId, body: parseBody(body) })).then(function([code, resp, cookies]) {
                         if (code === 200) {
                             res.writeHead(302, { Location: '/', 'Set-Cookie': serializeCookies(cookies) }).end();
@@ -157,4 +158,4 @@ createServer(function(req, res) {
             else res.writeHead(404).end();
         }
     }
-}).listen(80);
+}).listen(8080);
