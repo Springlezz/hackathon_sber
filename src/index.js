@@ -12,6 +12,8 @@ await createTables(db);
 await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Программирование', '0,17,229');
 await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Семья', '255,6,222');
 await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Окружение', '0,228,36');
+await dbRun(db, 'INSERT INTO events (creator, time_created, time_ended, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 1663738800, 'Хакатон - открытие', '', 'online');
+await dbRun(db, 'INSERT INTO events (creator, time_created, time_ended, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 1663838800, 'Хакатон - закрытие', '', 'online');
 
 const types = {
     txt: 'text/plain; charset=utf-8',
