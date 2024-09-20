@@ -32,17 +32,6 @@ function createCalendar(root) {
 
 createCalendar(document.getElementById('calendar-root'));
 
-function getApi(name, data = {}) {
-    return fetch(`/api/${name}?` + Object.entries(data).map(([k, v]) => `${k}=${v}`).join('&')).then(r => r.json());
-}
-function postApi(name, data = {}) {
-    return fetch('/api/' + name, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    }).then(r => r.json());
-}
-
 let tags = [];
 async function selectTag(tag) {
     if (tags.includes(tag)) { tags.splice(tags.indexOf(tag), 1); } else { tags.push(tag); }
@@ -58,12 +47,6 @@ async function selectTag(tag) {
 function clickFilters() {
     if (location.hash === '#filters') { location.hash = ''; } else { location.hash = 'filters'; }
 }
-
-getApi('getUserInfo').then(function(r) {
-    if (r.error) { document.querySelector("#events > div.buttons").remove(); } else {
-        $("#auth").empty().append($('<a href="profile">').text(`${r.firstName} ${r.secondName}`));
-    }
-});
 
 getApi('getTags').then(function(b) {
     for (const e of b.tags) { $('#filters').append($('<p>').text(e.name).click(() => selectTag(e.id)).css({ borderColor: `rgba(${e.color},1)`, backgroundColor: `rgba(${e.color},.2)` })); }
