@@ -8,6 +8,9 @@ import { getSession } from './session.js';
 
 const db = new sqlite3.Database('database.db');
 await createTables(db);
+await dbRun(db, 'INSERT INTO tags VALUES (?, ?)', 'Программирование', '0,17,229');
+await dbRun(db, 'INSERT INTO tags VALUES (?, ?)', 'Семья', '255,6,222');
+await dbRun(db, 'INSERT INTO tags VALUES (?, ?)', 'Окружение', '0,228,36');
 
 const types = {
     txt: 'text/plain; charset=utf-8',

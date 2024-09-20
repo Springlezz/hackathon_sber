@@ -9,7 +9,8 @@ const tables = {
         'first_name TEXT NOT NULL',
         'second_name TEXT NOT NULL',
         'third_name TEXT NOT NULL',
-        'city TEXT NOT NULL'
+        'city TEXT NOT NULL',
+        'telegram INTEGER'
     ],
     sessions: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
@@ -20,7 +21,6 @@ const tables = {
     ],
     events: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
-        'tags TEXT NOT NULL',
         'creator INTEGER NOT NULL', // user_id, speaker
         'time_created INTEGER NOT NULL',
         'time_ended INTEGER NOT NULL',
@@ -28,6 +28,11 @@ const tables = {
         'description TEXT NOT NULL',
         'location TEXT NOT NULL',
         'FOREIGN KEY (creator) REFERENCES users (id) ON DELETE CASCADE'
+    ],
+    event_tags: [
+        'id INTEGER PRIMARY KEY AUTOINCREMENT',
+        'event_id INTEGER NOT NULL',
+        'tag_id INTEGER NOT NULL'
     ],
     tags: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
