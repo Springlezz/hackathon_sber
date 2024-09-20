@@ -1,7 +1,6 @@
-import { dbGet } from '../db.js';
+import { dbAll } from '../db.js';
 
 export async function get(db) {
-    return [200, {
-        tags: await dbGet(db, 'SELECT * FROM tags')
-    }];
+    const [tags] = await dbAll(db, 'SELECT * FROM tags');
+    return [200, { tags }];
 }
