@@ -31,3 +31,11 @@ function createCalendar(root) {
 }
 
 createCalendar(document.getElementById('calendar-root'));
+
+let tags = [];
+function selectTag(tag) {
+    if (tags.includes(tag)) {tags.splice(tags.indexOf(tag),1);} else {tags.push(tag);}
+    data = new FormData();
+    data.append('tags', tags);
+    res = (await fetch('/get_evetns', {method: 'POST', body: data}).then(r => r.json()));
+}

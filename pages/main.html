@@ -1,4 +1,4 @@
-<h3>Календарь событий <span style="font-size:0.9em;color:#888">клуба "Макарона"</span></h3>
+<h2>Календарь событий <span style="font-size:0.9em;color:#888">клуба "Крона"</span></h2>
 <div id="calendar">
     <table>
         <thead>
@@ -16,4 +16,22 @@
     </table>
 </div>
 <h3>События сегодня</h3>
-<div id="events-today"></div>
+<div class="day-events">Сегодня нет событий</div>
+<div class="events">
+    <h2>Ближайшие события:</h2>
+    <div class="upcoming-events">
+        <ul>
+            <li><span>22.09</span>Хакатон Лекция</li>
+            <li><span>22.09</span>Польза и Польза аниме</li>
+        </ul>
+    </div>
+    <div class="buttons">
+        <a href="#" class="button">Добавить событие</a>
+        <a href="#filters" onclick='let f=document.querySelector(".tags");console.log(f.style.opacity);if (f.style.opacity==1) {f.style.opacity = 0;} else {f.style.opacity = 1;}' class="button">Фильтры</a>
+        <div class="tags" id='filters'>
+            <p onclick='selectTag("prog")' style='border-color: rgba(0,17,229,1);background-color: rgba(0,17,229,.2);'>Программирование</p>
+            <p onclick='selectTag("family")' style='border-color: rgba(255,6,222,1);background-color: rgba(255,6,222,.2);'>Семья</p>
+            <p onclick='selectTag("env")' style='border-color: rgba(0,228,36,1);background-color: rgba(0,228,36,.2);'>Окружение</p>
+        </div>
+    </div>
+</div>

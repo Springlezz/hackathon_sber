@@ -10,6 +10,8 @@ body {
     margin: 0;
     background: #e8f3fc;
     font-family: sans-serif;
+    flex-direction: column;
+    margin-left: 20%;
 }
 
 #title {
@@ -36,9 +38,11 @@ body {
 }
 h1 {
     margin-top: 0;
-    text-align: center;
 }
-h3 {
+h2 {
+    color: #333;
+}
+h3, h1, h2 {
     text-align: center;
 }
 #header {
@@ -80,12 +84,6 @@ h3 {
 #calendar table th {
     background: #eee;
 }
-#events-today {
-    margin: 0 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-}
 
 form {
     padding: 20px;
@@ -106,4 +104,97 @@ label {
     color: #500;
     margin: 0 auto 15px;
     max-width: 500px;
+}
+
+.container {
+    display: flex;
+    width: 80%;
+    margin-top: 20px;
+}
+.events {
+    width: 35%;
+    margin-left: 5%;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#calendar table {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    border-collapse: collapse;
+/*    margin-top: 20px;*/
+    margin: auto;
+}
+#calendar table th, #calendar table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+#calendar table th {
+    background: #eee;
+    color: white;
+}
+#calendar table td.active {
+    background-color: #ffeb3b;
+}
+.tag {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}
+.day-events {
+    margin-top: 20px;
+    color: #999;
+}
+.buttons {
+    margin-top: 20px;
+    text-align: center;
+}
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.button:hover {
+    background-color: #45a049;
+}
+.upcoming-events {
+    margin-top: 20px;
+}
+.upcoming-events ul {
+    list-style-type: none;
+    padding: 0;
+}
+.upcoming-events li {
+    margin-bottom: 10px;
+}
+.upcoming-events span {
+    color: #4CAF50;
+    margin-right: 5px;
+}
+.tags p {
+    border-radius: 10px;
+    padding: 8px;
+    display: inline-block;
+    border-style: solid;
+    cursor: pointer;
+}
+.tags {
+    opacity: 0;
+    justify-content: space-around;
+    display: none;
+    transition: opacity 0.5s;
+}
+div:target {
+    display: flex;
 }
