@@ -7,7 +7,9 @@ export async function post(db, { userId, body }) {
     if (role === 0) return [403, { error: 'Недостаточно прав для совершения действия.' }];
     const check = checkProps(['id'], body);
     if (check) return [400, { error: check }];
-    if (role === 1 && (await dbGet(db, 'SELECT creator FROM events WHERE id = ?', body.id))[0].creator !== userId) return [401, { error: 'Недостаточно прав для совершения действия.' }];
+    const [event] = await dbGet(db, 'SELECT creator FROM events WHERE id = ?', body.id);
+    if (!event) return [404, { error: 'Событие не найдено.' }];
+    if (role === 1 && event.creator !== userId) return [401, { error: 'Недостаточно прав для совершения действия.' }];
 
     await dbRun(db, 'DELETE FROM events WHERE id = ?', body.id);
 

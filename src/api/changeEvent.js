@@ -8,6 +8,7 @@ export async function post(db, { userId, body }) {
     const check = checkProps(['id', 'title', 'description', 'location', 'time', 'duration', 'tags'], body);
     if (check) return [400, { error: check }];
     const [event] = await dbGet(db, 'SELECT creator, confirmed, accepted FROM events WHERE id = ?', body.id);
+    if (!event) return [404, { error: 'Событие не найдено.' }];
     if (role === 1) {
         if (event.creator !== userId) return [403, { error: 'Недостаточно прав для совершения действия.' }];
         if (event.confirmed && !event.accepted) return [403, { error: 'Событие было отклонено.' }];

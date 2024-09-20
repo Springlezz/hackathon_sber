@@ -9,6 +9,7 @@ export async function post(db, { userId, body }) {
     if (check) return [400, { error: check }];
 
     const [event] = await dbGet(db, 'SELECT creator, confirmed, accepted FROM events WHERE id = ?', body.id);
+    if (!event) return [404, { error: 'Событие не найдено.' }];
     if (event.creator === userId) return [400, { error: 'Вы не можете присоединиться к событию, которое создали.' }];
     else {
         if (!event.confirmed) return [403, { error: 'Событие ещё не подтверждено.' }];
