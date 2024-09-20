@@ -4,6 +4,7 @@ import { createServer } from 'http';
 import sqlite3 from 'sqlite3';
 import { gzip } from 'zlib';
 import createTables from './createDB.js';
+import { dbRun } from './db.js';
 import { getSession } from './session.js';
 
 const db = new sqlite3.Database('database.db');
