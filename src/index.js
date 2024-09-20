@@ -122,7 +122,7 @@ createServer(function(req, res) {
                 case '/register/':
                     Promise.all([
                         import('./api/register.js'),
-                        getBody(req), getUserId(res)
+                        getBody(req), getUserId(req)
                     ]).then(([register, body, userId]) => register.post(db, { userId, body: parseBody(body) })).then(function([code, resp, cookies]) {
                         if (code === 200) {
                             res.writeHead(302, { Location: '/', 'Set-Cookie': serializeCookies(cookies) }).end();
