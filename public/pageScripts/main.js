@@ -37,10 +37,21 @@ async function selectTag(tag) {
     if (tags.includes(tag)) {tags.splice(tags.indexOf(tag),1);} else {tags.push(tag);}
     data = new FormData();
     data.append('tags', tags);
-    res = (await fetch('/get_evetns', {method: 'POST', body: data}).then(r => r.json()));
+    res = (await fetch('/getEvents', {method: 'POST', body: data}).then(r => r.json()));
 }
 
-f = document.getElementById('filters');
 function clickFilters() {
     if (location.hash==='#filters') {location.hash = ''} else {location.hash = 'filters'}
 }
+
+fetch('/getUesrInfo').then(r => r.json()).then(function(r) {
+    if (r.error) {document.querySelector("#events > div.buttons").remove()} else {
+        $("#auth").clear().append($('<a href="profile">').text(`${r.firstName} ${r.secondName}`))
+    }
+})
+
+//fetch('/getEvents?tags='+tags.join(',')).then(r => r.json()).then(function(b) {
+//    for (const e of b.events) {$('#filters').append($('<p>').text(e.title).click(()=>selectTag(b)).css({borderColor: 'rgba(0,17,229,1)',backgroundColor: 'rgba(0,17,229,.2)'})  )})}
+
+fetch('/getTags').then(r => r.json()).then(function(b) {
+    for (const e of b.tags) {$('#filters').append($('<p>').text(e.name).click(()=>selectTag(e.id)).css({borderColor: `rgba(${e.color},1)`,backgroundColor: `rgba(${e.color},.2)`}))}})
