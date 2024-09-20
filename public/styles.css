@@ -65,7 +65,12 @@ h3, h1, h2 {
     border-radius: 20px;
 }
 #right {
-    width: 300px;
+    display: flex;
+    margin: auto;
+    max-width: 1000px;
+    min-height: calc(100% - 90px);
+
+    width: 400px;
     margin-left: 20px;
     padding: 20px;
     background: white;
@@ -154,7 +159,7 @@ label {
 }
 .button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px;
     margin: 0 10px;
     background-color: #4CAF50;
     color: white;
