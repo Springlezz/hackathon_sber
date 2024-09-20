@@ -4,11 +4,11 @@ const tables = {
     users: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
         'role INTEGER NOT NULL DEFAULT 0', // 0 - user, 1 - resident, 2 - moderator
-        'password TEXT NOT NULL',
-        'email TEXT NOT NULL',
+        'email TEXT',
+        'password TEXT',
         'first_name TEXT NOT NULL',
         'second_name TEXT NOT NULL',
-        'third_name TEXT NOT NULL',
+        'third_name TEXT',
         'country TEXT NOT NULL',
         'city TEXT NOT NULL',
         'telegram INTEGER'
@@ -58,6 +58,13 @@ const tables = {
         'creator INTEGER NOT NULL',
         'closed INTEGER NOT NULL DEFAULT 0',
         'FOREIGN KEY (creator) REFERENCES users (id) ON DELETE CASCADE'
+    ],
+    telegram_auth: [
+        'id INTEGER PRIMARY KEY AUTOINCREMENT',
+        'type INTEGER NOT NULL', // 0 - login, 1 - registration
+        'code TEXT NOT NULL',
+        'telegram INTEGER',
+        'expires INTEGER NOT NULL'
     ]
 };
 

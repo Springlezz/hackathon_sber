@@ -161,3 +161,8 @@ createServer(function(req, res) {
         }
     }
 }).listen(8080);
+
+setInterval(function() {
+    dbRun(db, 'DELETE FROM sessions WHERE expires <= ?', Date.now());
+    dbRun(db, 'DELETE FROM telegram_auth WHERE expires <= ?', Date.now());
+}, 60_000);

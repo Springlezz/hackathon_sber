@@ -4,7 +4,7 @@ import { dbGet, dbRun } from './db.js';
 export async function createSession(db, userId) {
     const expires = Date.now() + 1000 * 60 * 60 * 24 * 7; // 1 week
     const token = randomBytes(16).toString('hex');
-    await dbGet(db, 'INSERT INTO sessions (token, user_id, expires) VALUES (?, ?, ?)', token, userId, expires);
+    await dbRun(db, 'INSERT INTO sessions (token, user_id, expires) VALUES (?, ?, ?)', token, userId, expires);
     return [token, new Date(expires).toUTCString()];
 }
 export async function deleteSession(db, token) {
