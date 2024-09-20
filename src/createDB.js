@@ -8,7 +8,8 @@ const tables = {
         'email TEXT NOT NULL',
         'first_name TEXT NOT NULL',
         'second_name TEXT NOT NULL',
-        'third_name TEXT NOT NULL'
+        'third_name TEXT NOT NULL',
+        'city TEXT NOT NULL'
     ],
     sessions: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
@@ -25,6 +26,7 @@ const tables = {
         'time_ended INTEGER NOT NULL',
         'title TEXT NOT NULL',
         'description TEXT NOT NULL',
+        'location TEXT NOT NULL',
         'FOREIGN KEY (creator) REFERENCES users (id) ON DELETE CASCADE'
     ],
     tags: [
