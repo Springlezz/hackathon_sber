@@ -50,4 +50,8 @@ fetch('/getUesrInfo').then(r => r.json()).then(function(r) {
     }
 })
 
-fetch('/getEvents?tags='+tags.join(',')).then(r => r.json()).then(function(b) {})
+//fetch('/getEvents?tags='+tags.join(',')).then(r => r.json()).then(function(b) {
+//    for (const e of b.events) {$('#filters').append($('<p>').text(e.title).click(()=>selectTag(b)).css({borderColor: 'rgba(0,17,229,1)',backgroundColor: 'rgba(0,17,229,.2)'})  )})}
+
+fetch('/getTags').then(r => r.json()).then(function(b) {
+    for (const e of b.tags) {$('#filters').append($('<p>').text(e.name).click(()=>selectTag(e.id)).css({borderColor: `rgba(${e.color},1)`,backgroundColor: `rgba(${e.color},.2)`}))}})
