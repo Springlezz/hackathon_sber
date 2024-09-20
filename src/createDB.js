@@ -33,7 +33,9 @@ const tables = {
     event_tags: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
         'event_id INTEGER NOT NULL',
-        'tag_id INTEGER NOT NULL'
+        'tag_id INTEGER NOT NULL',
+        'FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE',
+        'FOREIGN KEY (tag_id) REFERENCES tags (id) ON DELETE CASCADE'
     ],
     tags: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
