@@ -170,7 +170,20 @@ label {
     color: white;
 }
 #calendar table td.active {
-    background-color: #ffeb3b;
+    background-color: #F83;
+}
+#calendar table td.event_marker {
+    border-radius: 50%;
+    background-color: rgb(0 111 255);
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 12px;
+    color: white;
+    line-height: 16px;
+    text-align: center;
 }
 .tag {
     display: inline-block;
@@ -216,6 +229,7 @@ label {
 
 #filters {
     display: flex;
+    visibility: hidden;
     flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 5px;
@@ -225,6 +239,7 @@ label {
 }
 #filters:target {
     opacity: 1;
+    visibility: visible;
 }
 #filters p {
     display: inline-block;
