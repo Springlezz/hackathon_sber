@@ -1,5 +1,6 @@
-import { dbGet } from '../db.js';
+import checkProps from '../checkProps.js';
 import { API_KEY } from '../consts.js';
+import { dbGet } from '../db.js';
 
 export async function get(db, { search }) {
     const check = checkProps(['key', 'id'], search);
@@ -7,7 +8,7 @@ export async function get(db, { search }) {
 
     if (search.key !== API_KEY) return [401, { error: 'Неверный ключ API.' }];
 
-    const [user] = await dbGet(db, 'SELECT email, role, city, first_name, second_name, third_name FROM users WHERE telegram = ?', id);
+    const [user] = await dbGet(db, 'SELECT email, role, city, first_name, second_name, third_name FROM users WHERE telegram = ?', search.id);
     if (!user) return [404, { error: 'Пользователь не найден.' }];
     return [200, {
         email: user.email,
