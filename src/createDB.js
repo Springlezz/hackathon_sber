@@ -22,12 +22,11 @@ const tables = {
     ],
     events: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
-        'creator INTEGER NOT NULL', // user_id, speaker
-        'time_created INTEGER NOT NULL',
-        'time_ended INTEGER NOT NULL',
         'title TEXT NOT NULL',
         'description TEXT NOT NULL',
+        'time INTEGER NOT NULL',
         'location TEXT NOT NULL',
+        'creator INTEGER NOT NULL', // user_id, speaker
         'FOREIGN KEY (creator) REFERENCES users (id) ON DELETE CASCADE'
     ],
     event_tags: [

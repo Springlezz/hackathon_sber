@@ -14,7 +14,7 @@ export async function post(db, { userId, body }) {
     const [numTags] = await dbGet(db, `SELECT COUNT(*) as numTags FROM tags WHERE id IN (${body.tags.map(() => '?').join(', ')})`, ...body.tags);
     if (numTags !== body.tags.length) return [400, { error: 'Неверные теги.' }];
 
-    const [{ lastID }] = await dbRun(db, 'INSERT INTO events (creator, time_created, time_ended, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', userId, Math.floor(Date.now() / 1000), body.time, body.title, body.description, body.location);
+    const [{ lastID }] = await dbRun(db, 'INSERT INTO events (title, description, time, location, creator) VALUES (?, ?, ?, ?, ?)', body.title, body.description, body.time, body.location, userId);
     for (const tag of body.tags) {
         await dbRun(db, 'INSERT INTO event_tags (event_id, tag_id) VALUES (?, ?)', lastID, tag);
     }

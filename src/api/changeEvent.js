@@ -16,7 +16,7 @@ export async function post(db, { userId, body }) {
     const [numTags] = await dbGet(db, `SELECT COUNT(*) as numTags FROM tags WHERE id IN (${body.tags.map(() => '?').join(', ')})`, ...body.tags);
     if (numTags !== body.tags.length) return [400, { error: 'Неверные теги.' }];
 
-    await dbRun(db, 'UPDATE events SET title = ?, description = ?, location = ?, time_ended = ? WHERE id = ?', body.title, body.description, body.location, body.time, body.id);
+    await dbRun(db, 'UPDATE events SET title = ?, description = ?, time = ?, location = ? WHERE id = ?', body.title, body.description, body.time, body.location, body.id);
 
     const [tags] = await dbAll(db, 'SELECT tag_id FROM event_tags WHERE event_id = ?', body.id);
     const deleteTags = tags.map(tag => tag.tag_id).filter(tag => !body.tags.includes(tag));
