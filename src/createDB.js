@@ -9,6 +9,7 @@ const tables = {
         'first_name TEXT NOT NULL',
         'second_name TEXT NOT NULL',
         'third_name TEXT NOT NULL',
+        'country TEXT NOT NULL',
         'city TEXT NOT NULL',
         'telegram INTEGER'
     ],
