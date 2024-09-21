@@ -7,7 +7,7 @@ if (userInfo.linkedTelegram) {
     $append(
         c,
         $E('label', {}, [
-            $T('Уведомление в Телеграмм: '),
+            $T('Уведомление в Телеграм: '),
             $E('input', {type:'checkbox',name:'notice'}, [])
         ])
     )
@@ -15,7 +15,7 @@ if (userInfo.linkedTelegram) {
     $append(
         c,
         $E('button', {onClick: regTg }, [
-            $T('Привязать телеграмм')
+            $T('Привязать телеграм')
         ])
     )
 }

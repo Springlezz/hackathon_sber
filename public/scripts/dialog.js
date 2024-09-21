@@ -1,3 +1,4 @@
+import { $addClasses, $append, $E, $remove, $style, $T } from '../scripts/dom.js';
 export function createDialog(content, buttons) {
     return $E('div', { id: 'dialog' }, [
         $E('div', { id: 'dialog-content' }, content),
