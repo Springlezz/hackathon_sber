@@ -26,7 +26,7 @@ export default function LoginTelegram({ setTitle, mainAppend, authorized, goPage
         if (error) $error.textContent = error;
         else {
             $clear($error);
-            $append(info, <>Напишите <a href="https://t.me/hakatonkrona_bot" target="_blank">боту</a> в телеграмм следующий код: "{c}"</>);
+            $append(info, <>Напишите <a href="https://t.me/hakatonkrona_bot" target="_blank">боту</a> в телеграмм следующий код: «{c}»</>);
             submit.style.display = '';
             code = c;
         }

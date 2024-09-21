@@ -31,6 +31,7 @@ export async function get(db, { userId, search }) {
     ]);
     return [200, {
         events: events.filter(event => role === 2 || event.creator === userId || (event.confirmed && event.accepted)).map(event => ({
+            id: event.id,
             title: event.title,
             description: event.description,
             time: event.time,

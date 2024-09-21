@@ -4,6 +4,7 @@ import { getApi } from './lib/api.js';
 import { $T, $append, $remove } from './lib/dom.js';
 import CreateEvent from './pages/create-event/index.jsx';
 import Error404 from './pages/error404/index.jsx';
+import Event from './pages/event/index.jsx';
 import Login from './pages/login/index.jsx';
 import LoginTelegram from './pages/loginTelegram/index.jsx';
 import Main from './pages/main/index.jsx';
@@ -19,6 +20,7 @@ const routes = {
     '/register/telegram/': RegisterTelegram,
     '/settings/': Settings,
     '/create-event/': CreateEvent,
+    '/event/': Event
 };
 
 const [header, showMenu, authShowButtons] = Header(goPage);

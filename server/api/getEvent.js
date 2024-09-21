@@ -1,4 +1,5 @@
-import { dbGet } from '../db.js';
+import checkProps from '../checkProps.js';
+import { dbAll, dbGet } from '../db.js';
 
 export async function get(db, { userId, search }) {
     const check = checkProps(['id'], search);
@@ -19,7 +20,7 @@ export async function get(db, { userId, search }) {
         time: event.time,
         duration: event.duration,
         location: event.location,
-        joined: userId ? !!(await dbGet(db, 'SELECT id FROM event_users WHERE user_id = ? AND event_id = ?', userId, search.id))[0] !== undefined : undefined,
-        tags: (await dbGet(db, 'SELECT tag_id FROM event_tags WHERE event_id = ?', search.id)).map(tag => tag.tag_id)
+        joined: userId ? !!(await dbGet(db, 'SELECT id FROM event_users WHERE user_id = ? AND event_id = ?', userId, search.id))[0] : undefined,
+        tags: (await dbAll(db, 'SELECT tag_id FROM event_tags WHERE event_id = ?', search.id))[0].map(tag => tag.tag_id)
     }];
 }
