@@ -8,7 +8,7 @@ html {
 body {
     height: 100%;
     margin: 0;
-    background: #e8f3fc;
+    background: #D4CEC2;
     font-family: sans-serif;
     flex-direction: column;
 }
@@ -18,7 +18,7 @@ body {
     font-weight: bold;
     font-size: 25px;
     padding: 10px;
-    color: black;
+    color: #D2D9E3;
     text-decoration: none;
 }
 
@@ -29,14 +29,14 @@ body {
     text-decoration: none;
     background: none;
     border: none;
-    color: black;
+    color: #D2D9E3;
     padding: 15px;
     font-size: 20px;
     line-height: 20px;
     cursor: pointer;
 }
 #auth > button:hover {
-    background: #c1d0eb;
+    background: #908281;
 }
 
 #menu {
@@ -45,7 +45,7 @@ body {
     top: 50px;
     right: 0;
     width: 200px;
-    background: #d0e1ff;
+    background: #4D3D3D;
 }
 #menu.show {
     display: block;
@@ -53,6 +53,7 @@ body {
 #menu > button {
     display: block;
     width: 100%;
+    color: #D2D9E3;
     background: none;
     border: none;
     padding: 15px;
@@ -62,7 +63,7 @@ body {
     cursor: pointer;
 }
 #menu > button:hover {
-    background: #c1d0eb;
+    background: #908281;
 }
 
 h1 {
@@ -80,7 +81,7 @@ h3, h1, h2 {
     justify-content: space-between;
     height: 50px;
     margin-bottom: 20px;
-    background: #d0e1ff;
+    background: #4D3D3D;
 }
 #main {
     display: flex;
@@ -107,19 +108,6 @@ h3, h1, h2 {
     background: white;
     border-radius: 20px;
 }
-#calendar table {
-    border-collapse: collapse;
-    margin: auto;
-}
-#calendar table th, #calendar table td {
-    border: 1px solid #ddd;
-    padding: 20px;
-    text-align: center;
-}
-#calendar table th {
-    background: #eee;
-}
-
 form {
     padding: 20px;
     border: 1px solid #ccc;
@@ -128,6 +116,7 @@ form {
     max-width: 400px;
 }
 label {
+    padding-left: 20px;
     display: flex;
     justify-content: space-between;
 }
@@ -166,7 +155,7 @@ label {
     background-color: #f9f9f9;
 }
 #calendar table th {
-    background: #eee;
+    background: #D4CEC2;
     color: white;
 }
 #calendar table td.active {
@@ -207,13 +196,14 @@ label {
     display: inline-block;
     padding: 10px;
     margin: 0 10px;
-    background-color: #4CAF50;
+    background-color: #C6AC89;
     color: white;
     text-decoration: none;
     border-radius: 5px;
+    border-color: initial;
 }
 .button:hover {
-    background-color: #45a049;
+    background-color: #D4CEC2;
 }
 .upcoming-events {
     margin-top: 20px;
