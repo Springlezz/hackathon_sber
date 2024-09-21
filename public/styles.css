@@ -230,6 +230,28 @@ label {
     margin-right: 5px;
 }
 
+#dialog {
+    display: flex;
+    position: absolute;
+    height: 20%;
+    width: 20%;
+    left: 38%;
+    top: 38%;
+    box-sizing: content-box;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 20px;
+    padding: 50px;
+}
+
+#dialog-back {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,.5);
+}
+
 #filters {
     display: none;
     flex-wrap: wrap;

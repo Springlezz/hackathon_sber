@@ -5,16 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Hackathon App</title>
         <link rel="stylesheet" href="/styles.css">
-        <script src="/scripts/index.js" type="module" defer></script>
+        <script src="/bundle.js" defer></script>
         {{head}}
     </head>
     <body>
         <div id="header">
             <a id="title" href="/">Hackathon App</a>
-            <div id="auth">
-                <a href="/login/">Вход</a>
-                <a href="/register/">Регистрация</a>
-            </div>
+            <div id="auth"></div>
         </div>
         <div id="main">
             <div id="content">{{content}}</div>
