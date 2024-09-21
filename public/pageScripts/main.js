@@ -1,3 +1,6 @@
+import { $addClasses, $append, $E, $remove, $style, $T } from '../scripts/dom.js';
+import { getApi } from '../scripts/api.js';
+
 function createCalendar(root) {
     const now = new Date();
     const year = now.getFullYear();
@@ -6,51 +9,81 @@ function createCalendar(root) {
     const firstDayOfMonth = new Date(year, month, 1); // Первый день месяца
     const lastDayOfMonth = new Date(year, month + 1, 0); // Последний день месяца
 
-    let row = document.createElement('tr');
+    let row = $E('tr', {}, []);
 
     const firstDayWeekday = (firstDayOfMonth.getDay() + 6) % 7; // Преобразование дня недели (чтобы Пн был 0)
     for (let i = 0; i < firstDayWeekday; i++) {
-        row.appendChild(document.createElement('td'));
+        $append(row, $E('td', {}, []));
     }
 
     for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-        const td = document.createElement('td');
-        td.id = 'day' + day;
-        if (now.getDate() === day) { td.className = td.className + 'active'; }
-        td.textContent = day;
-        row.appendChild(td);
+        const td = $E('td', { id: 'day' + day }, [$T(day)]);
+        $append(row, td);
+        if (now.getDate() === day) $addClasses(td, 'active');
         if ((day + firstDayWeekday) % 7 === 0) {
-            root.appendChild(row);
-            row = document.createElement('tr');
+            $append(root, row);
+            row = $E('tr', {}, []);
         }
     }
 
     for (let i = 0; i < 7 - lastDayOfMonth.getDay(); i++) {
-        const td = document.createElement('td');
-        row.appendChild(td);
+        $append(row, $E('td', {}, []));
     }
-    root.appendChild(row);
+    $append(root, row);
 }
 
 createCalendar(document.getElementById('calendar-root'));
 
 let tags = [];
 async function selectTag(tag) {
-    $('.event_marker').remove();
-    if (tags.includes(tag)) { $(`#tag${tag}`).css({ borderColor: 'rgba(0,0,0,0)' }); tags.splice(tags.indexOf(tag), 1); } else { tags.push(tag); $(`#tag${tag}`).css({ borderColor: `rgba(${colors[tag]},1)` }); }
-    const b = await getApi('getEvents', { tags: tags.join(',') });
-    for (const e of b.events) {
-        let d = new Date(e.time_created * 1000);
-        if (d.getDate() === new Date().getDate()) { $(`#day${d.getDate()}`).append($('<div>').addClass('event_marker')); }
-        if (e.time_created > Date.now() / 1000 | 0) { $('#events>div.upcoming-events>ul').append($('<li>').append($('<span>').text(d.toLocaleDateString('ru', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }))).text(e.title)); }
+    for (const elem of document.getElementsByClassName('event_marker')) $remove(elem);
+
+    if (tags.includes(tag)) {
+        $style(document.getElementById(`tag${tag}`), 'borderColor', 'rgba(0,0,0,0)');
+        tags.splice(tags.indexOf(tag), 1);
+    }
+    else {
+        $style(document.getElementById(`tag${tag}`), 'borderColor', `rgba(${colors[tag]},1)`);
+        tags.push(tag);
+    }
+
+    const { events } = await getApi('getEvents', { timeStart: Date.now() / 1000 | 0, timeEnd: (Date.now() + 60 * 60 * 24 * 31 * 1000) / 1000 | 0, tags: tags.join(',') });
+    for (const event of events) {
+        const date = new Date(event.time_created * 1000);
+        if (date.getDate() === new Date().getDate()) {
+            $append(document.getElementById(`day${date.getDate()}`), $E('div', { className: 'event_marker' }, []));
+        }
+        if (event.time_created > Date.now() / 1000 | 0) {
+            $append(
+                document.querySelector('#events>div.upcoming-events>ul'),
+                $E('li', {}, [
+                    $E('span', {}, $T(date.toLocaleDateString('ru', {
+                        month: '2-digit', day: '2-digit',
+                        hour: '2-digit', minute: '2-digit'
+                    }))),
+                    $T(' ' + event.title)
+                ])
+            );
+        }
     }
 }
 
-function clickFilters() {
-    if (location.hash === '#filters') { location.hash = ''; } else { location.hash = 'filters'; }
-}
+document.getElementById('open-filters').addEventListener('click', function() {
+    location.hash = location.hash === '#filters' ? '' : 'filters';
+});
 
-let colors = {};
-getApi('getTags').then(function(b) {
-    for (let e of b.tags) { colors[e.id] = e.color; $('#filters').append($('<p>').attr('id', 'tag' + e.id).text(e.name).click(() => selectTag(e.id)).css({ borderColor: `rgba(${e.color},0)`, backgroundColor: `rgba(${e.color},.2)` })); }
+const $filters = document.getElementById('filters');
+
+const colors = {};
+getApi('getTags').then(function({ tags }) {
+    for (const tag of tags) {
+        colors[tag.id] = tag.color;
+        const $tag = $E('p', {
+            id: 'tag' + tag.id,
+            onClick: () => selectTag(tag.id)
+        }, [$T(tag.name)]);
+        $style($tag, 'borderColor', `rgba(${tag.color},0)`);
+        $style($tag, 'backgroundColor', `rgba(${tag.color},.2)`);
+        $append($filters, $tag);
+    }
 });
