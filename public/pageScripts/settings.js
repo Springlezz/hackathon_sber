@@ -4,20 +4,14 @@ import { $append, $E, $T } from '../dom.js';
 const c = document.getElementById('content');
 const userInfo = await getApi('getUserInfo');
 if (userInfo.linkedTelegram) {
-    $append(
-        c,
-        $E('label', {}, [
-            $T('Уведомление в Телеграмм: '),
-            $E('input', { type: 'checkbox', name: 'notice' }, [])
-        ])
-    );
+    let e = document.createElement('label');
+    e.innerHTML = 'Уведомления в Телеграмм: <input type="checkbox" name="notice">';
+    c.insertBefore(e, document.getElementById('saveChanges'));
 } else {
-    $append(
-        c,
-        $E('button', { onClick: regTg }, [
-            $T('Привязать телеграмм')
-        ])
-    );
+    e = document.createElement('button');
+    e.onclick = linkTg
+    e.innerText = 'Привязать телеграмм';
+    c.append(e);
 }
 
 async function linkTg() {

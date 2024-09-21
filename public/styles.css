@@ -117,6 +117,7 @@ form {
 }
 label {
     padding-left: 20px;
+    padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
 }
