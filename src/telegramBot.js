@@ -1,5 +1,5 @@
 import { request } from 'https';
-import { dbGet, dbRun } from './db.js';
+import { dbAll, dbGet, dbRun } from './db.js';
 
 const TELEGRAM_TOKEN = '7212456462:AAEGw79rGEFC_kaJNb5Cr6wI6UD_UJwGGaA';
 
@@ -24,15 +24,25 @@ function botApi(name, data) {
 function sendMessage(chatId, text) {
     return botApi('sendMessage', { chat_id: chatId, text, parse_mode: 'HTML' });
 }
-export function sendMessageWithKeyboard(chatId, text) {
+function sendMessageWithKeyboard(chatId, text) {
     return botApi('sendMessage', {
         chat_id: chatId, text, parse_mode: 'HTML', reply_markup: {
             keyboard: [
                 ['👤 О пользователе'],
+                ['🎉 События'],
                 ['❌ Отвязать аккаунт']
             ]
         }
     });
+}
+export function sendEvent(userId, event) {
+    const message = `<b>${event.title}</b>
+Место прохождения: ${event.location}
+Время: ${new Date(event.time).toLocaleString('ru', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}
+Длительность: ${event.duration / 60} минут
+
+${event.description}`;
+    sendMessageWithKeyboard(userId, message);
 }
 
 export default async function initTelegramBot(db) {
@@ -45,7 +55,7 @@ export default async function initTelegramBot(db) {
                 dbGet(db, 'SELECT * FROM users WHERE telegram = ?', message.from.id).then(async function([user]) {
                     switch (message.text) {
                         case '/start':
-                            await (user ? sendMessageWithKeyboard : sendMessage)(message.chat.id, '<b>Об этом боте:</b>\nБот рассказывает вам о интересных событиях Кроны. Отметьте интересные категории и отметьте "Уведомления в телеграм" на сайте, чтобы получать уведомления о событиях.');
+                            await (user ? sendMessageWithKeyboard : sendMessage)(message.chat.id, `Добро пожаловать, <b>${message.from.first_name}</b>! Я - <b>Бот Хакатона v0\u00ad.0\u00ad.­0\u00ad.0.\u00ad0.\u00ad0.\u00ad0.\u00ad1 beta</b> для "Крона".\nБуду вашим верным помощником!` + (user ? '' : `\nПожалуйста, привяжите аккаунт Телеграма к сайту <i>ссылка на сайт</i>.`));
                             break;
                         case '👤 О пользователе':
                             if (!user) return sendMessage(message.chat.id, 'Этот телеграм не привязан к аккаунту.');
@@ -55,6 +65,15 @@ export default async function initTelegramBot(db) {
 <b>Роль:</b> ${['пользователь', 'резидент', 'администратор'][user.role]}
 <b>Город:</b> ${user.city}
 <b>Страна:</b> ${user.country}`, { parse_mode: 'HTML' });
+                            break;
+                        case '🎉 События':
+                            if (!user) return sendMessage(message.chat.id, 'Этот телеграм не привязан к аккаунту.');
+                            dbAll(db, 'SELECT * FROM events JOIN event_users ON event_users.event_id = events.id WHERE event_users.user_id = ?', user.id).then(function([events]) {
+                                if (events.length === 0) return sendMessage(message.chat.id, 'У вас нет событий.');
+                                for (const event of events) {
+                                    sendEvent(message.chat.id, event);
+                                }
+                            });
                             break;
                         case '❌ Отвязать аккаунт':
                             if (!user) return sendMessage(message.chat.id, 'Этот телеграм не привязан к аккаунту.');
@@ -72,7 +91,7 @@ export default async function initTelegramBot(db) {
                                         if (user) return sendMessageWithKeyboard(message.chat.id, 'Этот телеграм уже привязан к аккаунту.');
                                     }
                                     await dbRun(db, 'UPDATE telegram_auth SET telegram = ? WHERE code = ?', message.from.id, message.text);
-                                    sendMessageWithKeyboard(message.chat.id, `Вы успешно ${['вошли в систему', 'зарегистрировались'][auth.type]}. Вернитесь на страницу входа и нажмите кнопку "Продолжить".`);
+                                    sendMessageWithKeyboard(message.chat.id, `Вы успешно ${['вошли в систему', 'зарегистрировались'][auth.type]}.Вернитесь на страницу входа и нажмите кнопку "Продолжить".`);
                                 });
                             }
                             else (user ? sendMessageWithKeyboard : sendMessage)(message.chat.id, 'Я не понял, что вы хотите мне сообщить.');
@@ -82,4 +101,4 @@ export default async function initTelegramBot(db) {
             }
         }
     }
-}
+};

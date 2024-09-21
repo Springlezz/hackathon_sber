@@ -1,6 +1,6 @@
 import checkProps from '../checkProps.js';
 import { dbAll, dbGet, dbRun } from '../db.js';
-import { sendMessageWithKeyboard } from '../telegramBot.js';
+import { sendEvent } from '../telegramBot.js';
 
 export async function post(db, { userId, body }) {
     if (userId === null) return [401, { error: 'Пользователь не авторизован.' }];
@@ -18,15 +18,8 @@ export async function post(db, { userId, body }) {
             dbGet(db, 'SELECT title, description, location, time, duration FROM events WHERE id = ?', body.id)
         ]);
 
-        const message = `<b>${event.title}</b>
-Место прохождения: ${event.location}
-Время: ${new Date(event.time).toLocaleString('ru', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}
-Длительность: ${event.duration / 60} минут
-
-${event.description}`;
-
         for (const tg of telegrams) {
-            sendMessageWithKeyboard(tg.telegram, message);
+            sendEvent(tg.telegram);
         }
     }
 
