@@ -41,12 +41,8 @@ async function selectTag(tag) {
     const b = await getApi('getEvents', { tags: tags.join(',') });
     for (const e of b.events) {
         let d = new Date(e.time_created*1000)
-        if (d.getDate()===new Date().getDate()) {$(`day${d}`).append($('<div>').addClass('event_marker'))}
+        if (d.getDate()===new Date().getDate()) {$(`#day${d.getDate()}`).append($('<div>').addClass('event_marker'))}
         if (e.time_created > Math.floor(Date.now()/1000)) {$('#events>div.upcoming-events>ul').append($('<li>').append($('<span>').text(d.toLocaleDateString('ru',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}))).text(e.title))}
-        $('#filters').append($('<p>').text(e.title).click(() => selectTag(b)).css({
-            borderColor: 'rgba(0,17,229,1)',
-            backgroundColor: 'rgba(0,17,229,.2)'
-        }));
     }
 }
 

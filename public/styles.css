@@ -172,7 +172,7 @@ label {
 #calendar table td.active {
     background-color: #F83;
 }
-#calendar table td.event_marker {
+#calendar div.event_marker {
     border-radius: 50%;
     background-color: rgb(0 111 255);
     width: 16px;
