@@ -1,4 +1,4 @@
-import { $E, $T, $append, $clear } from './dom.js';
+import { $E, $T, $append, $clear, $toggleClasses } from './dom.js';
 import { getApi } from './api.js';
 
 const $auth = document.getElementById('auth');
@@ -18,7 +18,7 @@ function authShowUser(info) {
     ]);
     $append(
         $auth,
-        $E('button', { onClick: () => menu.toggleClass('show') }, [$T(`${info.firstName} ${info.secondName}`)]),
+        $E('button', { onClick: () => $toggleClasses(menu, 'show') }, [$T(`${info.firstName} ${info.secondName}`)]),
         menu
     );
 }
