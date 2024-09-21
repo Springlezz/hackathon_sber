@@ -6,14 +6,19 @@ import { gzip } from 'zlib';
 import createTables from './createDB.js';
 import { dbRun } from './db.js';
 import { getSession } from './session.js';
+import initTelegramBot from './telegramBot.js';
 
 const db = new sqlite3.Database('database.db');
 await createTables(db);
-await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Программирование', '0,17,229');
-await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Семья', '255,6,222');
-await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Окружение', '0,228,36');
-await dbRun(db, 'INSERT INTO events (creator, time_created, time_ended, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 1663738800, 'Хакатон - открытие', '', 'online');
-await dbRun(db, 'INSERT INTO events (creator, time_created, time_ended, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 1663838800, 'Хакатон - закрытие', '', 'online');
+
+// debug
+dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Программирование', '0,17,229');
+dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Семья', '255,6,222');
+dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Окружение', '0,228,36');
+dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 2, 'Хакатон - открытие', '', 'online');
+dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 2, 'Хакатон - закрытие', '', 'online');
+
+initTelegramBot(db);
 
 const types = {
     txt: 'text/plain; charset=utf-8',
