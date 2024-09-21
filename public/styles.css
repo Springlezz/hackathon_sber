@@ -157,7 +157,6 @@ label {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
-    background-color: #f9f9f9;
 }
 #calendar table th {
     background: #D4CEC2;
@@ -168,19 +167,23 @@ label {
 }
 #calendar table td {
     position: relative;
+    cursor: pointer;
 }
 #calendar table td .event_marker {
     border-radius: 50%;
     background-color: rgb(0 111 255);
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     position: absolute;
     right: 5px;
     top: 5px;
-    font-size: 12px;
+    font-size: 11px;
     color: white;
-    line-height: 16px;
+    line-height: 21px;
     text-align: center;
+}
+#calendar table td.select_day {
+    box-shadow: inset black 0 0 0px 3px;
 }
 .tag {
     display: inline-block;
