@@ -5,12 +5,16 @@
 html {
     height: 100%;
 }
+@font-face {
+    font-family: 'Loft Light'; 
+    src: url(/Sans.ttf) format("truetype");
+}
 body {
     height: 100%;
     margin: 0;
     background: #D4CEC2;
-    font-family: sans-serif;
     flex-direction: column;
+    font-family: 'Loft Light', sans-serif;
 }
 
 #title {
@@ -192,11 +196,13 @@ label {
 .buttons {
     margin-top: 20px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 .button {
     display: inline-block;
     padding: 10px;
-    margin: 0 10px;
+    margin: 10px;
     background-color: #C6AC89;
     color: white;
     text-decoration: none;

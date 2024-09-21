@@ -76,6 +76,7 @@ async function selectTag(tag) {
 
     setEventsDay(tags);
 }
+setEventsDay([]);
 
 const $filters = document.getElementById('filters');
 document.getElementById('open-filters').addEventListener('click', function() {
