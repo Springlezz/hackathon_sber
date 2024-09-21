@@ -15,7 +15,8 @@ export default function Settings({ setTitle, mainAppend, authorized, goPage }) {
     const city = <input type="text" required />;
     const country = <input type="text" required />;
 
-    const tgNotifications = <input type="checkbox" style="display:none" />;
+    const tgNotifications = <input type="checkbox" />;
+    const tgNotificationsLabel = <label style="display:none">Уведомления в Telegram: {tgNotifications}</label>;
 
     const $error = <></>;
     const form = (
@@ -26,7 +27,7 @@ export default function Settings({ setTitle, mainAppend, authorized, goPage }) {
             <label class={formStyles.gap}>Отчество: {thirdName}</label>
             <label>Город: {city}</label>
             <label class={formStyles.gap}>Страна: {country}</label>
-            <label>Уведомления в Telegram: {tgNotifications}</label>
+            {tgNotificationsLabel}
             <div class={formStyles.error}>{$error}</div>
             <input type="submit" value="Сохранить" class={btnStyles.button} onClick={register} />
         </form>
@@ -45,7 +46,7 @@ export default function Settings({ setTitle, mainAppend, authorized, goPage }) {
             city.value = info.city;
             country.value = info.country;
             if (info.linkedTelegram) {
-                tgNotifications.style.display = '';
+                tgNotificationsLabel.style.display = '';
                 tgNotifications.checked = info.telegramNotifications;
             }
         }
@@ -61,7 +62,7 @@ export default function Settings({ setTitle, mainAppend, authorized, goPage }) {
             thirdName: thirdName.value,
             city: city.value,
             country: country.value,
-            // telegramNotifications: tgNotifications.checked
+            telegramNotifications: tgNotifications.checked
         });
         $error.textContent = error || '';
         if (!error) {

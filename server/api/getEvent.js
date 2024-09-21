@@ -20,7 +20,8 @@ export async function get(db, { userId, search }) {
         time: event.time,
         duration: event.duration,
         location: event.location,
-        joined: userId ? !!(await dbGet(db, 'SELECT id FROM event_users WHERE user_id = ? AND event_id = ?', userId, search.id))[0] : undefined,
+        confirmed: role === 2 && event.confirmed ? undefined : false,
+        joined: event.accepted ? userId ? !!(await dbGet(db, 'SELECT id FROM event_users WHERE user_id = ? AND event_id = ?', userId, search.id))[0] : undefined : undefined,
         tags: (await dbAll(db, 'SELECT tag_id FROM event_tags WHERE event_id = ?', search.id))[0].map(tag => tag.tag_id)
     }];
 }

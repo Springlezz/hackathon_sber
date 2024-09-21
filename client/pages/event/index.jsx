@@ -38,22 +38,42 @@ export default async function Event({ setTitle, mainAppend }) {
     );
     mainAppend(<div class={styles.description}>{event.description}</div>);
 
+    async function join() {
+        const { error } = await postApi('joinEvent', { id: eventId });
+        if (error) return alert(error);
+        $remove(joinBtn);
+        mainAppend(leaveBtn);
+    }
+    async function leave() {
+        const { error } = await postApi('leaveEvent', { id: eventId });
+        if (error) return alert(error);
+        $remove(leaveBtn);
+        mainAppend(joinBtn);
+    }
+
+    const joinBtn = <button classes={[btnStyles.button, styles.button]} onClick={join}>Принять участие</button>;
+    const leaveBtn = <button classes={[btnStyles.button, styles.button]} onClick={leave}>Отменить участие</button>;
+
     if (event.hasOwnProperty('joined')) {
-        async function join() {
-            const { error } = await postApi('joinEvent', { id: eventId });
+        mainAppend(event.joined ? leaveBtn : joinBtn);
+    }
+    else if (event.confirmed === false) {
+        function confirm() {
+            const { error } = postApi('confirmEvent', { id: eventId, accepted: true });
             if (error) return alert(error);
-            $remove(joinBtn);
-            mainAppend(leaveBtn);
-        }
-        async function leave() {
-            const { error } = await postApi('leaveEvent', { id: eventId });
-            if (error) return alert(error);
-            $remove(leaveBtn);
+            $remove(confirmBtn);
+            $remove(cancelBtn);
             mainAppend(joinBtn);
         }
+        function cancel() {
+            const { error } = postApi('confirmEvent', { id: eventId, accepted: false });
+            if (error) return alert(error);
+            $remove(confirmBtn);
+            $remove(cancelBtn);
+        }
 
-        const joinBtn = <button classes={[btnStyles.button, styles.button]} onClick={join}>Принять участие</button>;
-        const leaveBtn = <button classes={[btnStyles.button, styles.button]} onClick={leave}>Отменить участие</button>;
-        mainAppend(event.joined ? leaveBtn : joinBtn);
+        const confirmBtn = <button classes={[btnStyles.button, styles.button]} onClick={confirm}>Подтвердить событие</button>;
+        const cancelBtn = <button classes={[btnStyles.button, styles.button]} onClick={cancel}>Отклонить событие</button>;
+        mainAppend([confirmBtn, cancelBtn]);
     }
 };

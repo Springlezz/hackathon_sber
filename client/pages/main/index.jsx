@@ -105,7 +105,7 @@ export default function Main({ setTitle, mainAppend, goPage }) {
                 $events,
                 <Link class={styles.event} href={`/event/?id=${event.id}`} onClick={goPage}>
                     <div class={styles.title}>{event.title}</div>
-                    <div class={styles.info}>{eventLocaleDate}, {event.duration} минут, {event.location}</div>
+                    <div class={styles.info}>{eventLocaleDate}, {event.duration / 60} минут, {event.location}</div>
                     <div class={styles.description}>{event.description}</div>
                 </Link>
             );

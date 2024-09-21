@@ -9,17 +9,17 @@ export async function post(db, { userId, body }) {
     const check = checkProps(['id', 'accepted'], body);
     if (check) return [400, { error: check }];
 
-    const [, { changes }] = await dbRun(db, 'UPDATE events SET confirmed = 1, accepted = ? WHERE id = ?', body.accepted, body.id);
+    const [, { changes }] = await dbRun(db, 'UPDATE events SET confirmed = 1, accepted = ? WHERE id = ?', +body.accepted, +body.id);
 
     if (changes === 0) return [404, { error: 'Событие не найдено.' }];
-    else {
+    else if (body.accepted) {
         const [[telegrams], [event]] = await Promise.all([
-            dbAll(db, 'SELECT telegram FROM events WHERE telegram != NULL AND telegram_notifications = 1'),
+            dbAll(db, 'SELECT telegram FROM users WHERE telegram IS NOT NULL AND telegram_notifications = 1'),
             dbGet(db, 'SELECT title, description, location, time, duration FROM events WHERE id = ?', body.id)
         ]);
 
         for (const tg of telegrams) {
-            sendEvent(tg.telegram);
+            sendEvent(tg.telegram, event);
         }
     }
 

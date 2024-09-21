@@ -20,8 +20,8 @@ dbGet(db, 'SELECT COUNT(*) as num FROM users').then(function([{ num }]) {
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Программирование', '0,17,229');
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Семья', '255,6,222');
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Окружение', '0,228,36');
-dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location, accepted, confirmed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 0, 1726829456, 2, 'Хакатон - открытие', 'Когда начинали, было всё хорошо...', 'online', 1, 1);
-dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location, accepted, confirmed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 0, 1726829456, 2, 'Хакатон - закрытие', 'Это то, где мы получим последнее место.', 'online', 1, 1);
+dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 60 * 60, 'Хакатон - открытие', 'Когда начинали, было всё хорошо...', 'online');
+dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location, accepted, confirmed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 0, 1726829456, 60 * 180, 'Хакатон - закрытие', 'Это то, где мы получим последнее место.', 'online', 1, 1);
 
 initTelegramBot(db);
 

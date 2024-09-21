@@ -87,10 +87,10 @@ export default async function initTelegramBot(db) {
                                     if (!auth) return sendMessage(message.chat.id, '⚠️ Код недействителен.');
                                     if (auth.telegram !== null) return sendMessage(message.chat.id, '⚠️ Вы уже вводили этот код.');
                                     if (auth.type === 1) { // register
-                                        const [user] = await dbGet(db, 'SELECT id FROM users WHERE telegram = ?', message.from.id);
+                                        const [user] = await dbGet(db, 'SELECT id FROM users WHERE telegram = ?', message.chat.id);
                                         if (user) return sendMessageWithKeyboard(message.chat.id, '⚠️ Этот телеграм уже привязан к аккаунту.');
                                     }
-                                    await dbRun(db, 'UPDATE telegram_auth SET telegram = ? WHERE code = ?', message.from.id, message.text);
+                                    await dbRun(db, 'UPDATE telegram_auth SET telegram = ? WHERE code = ?', message.chat.id, message.text);
                                     sendMessageWithKeyboard(message.chat.id, `✅ Вы успешно ${['вошли в систему', 'зарегистрировались'][auth.type]}.Вернитесь на страницу входа и нажмите кнопку "Продолжить"❗️❗️❗️`);
                                 });
                             }
