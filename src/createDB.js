@@ -11,8 +11,7 @@ const tables = {
         'third_name TEXT',
         'country TEXT NOT NULL',
         'city TEXT NOT NULL',
-        'telegram INTEGER',
-        'telegram_notifications INTEGER NOT NULL DEFAULT 0'
+        'telegram INTEGER'
     ],
     sessions: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',

@@ -31,6 +31,9 @@ function authShowButtons() {
 }
 
 getApi('getUserInfo').then(function(info) {
-    if (info.error) authShowButtons();
-    else authShowUser(info);
+    if (info.error) {authShowButtons();document.querySelector('.buttons>a').remove()}
+    else {
+        authShowUser(info);
+        if (info.role!==1) document.querySelector('.buttons>a').remove();
+    }
 });
