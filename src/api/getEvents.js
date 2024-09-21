@@ -6,21 +6,22 @@ export async function get(db, { userId, search }) {
     const check = checkProps(['timeStart', 'timeEnd', 'tags'], search);
     if (check) return [400, { error: check }];
 
-    let sql = 'SELECT * FROM events';
+    let sql = `
+        SELECT * FROM events
+        JOIN event_tags ON event_tags.event_id = events.id
+        WHERE events.time >= ? AND events.time <= ?
+    `;
     let eventTags = [];
     if (search.tags) {
         eventTags = search.tags.split(',');
         for (const tag of eventTags) {
             if (!isNoNegInt(tag)) return [400, { error: 'Неверный идентификатор тега.' }];
         }
-        sql += `
-            JOIN event_tags ON events.id = event_tags.event_id
-            WHERE time >= ? AND time <= ? AND event_tags.tag_id IN (${eventTags.map(() => '?').join(', ')})
-        `;
+        sql += `AND event_tags.tag_id IN (${eventTags.map(() => '?').join(', ')})`;
     }
     else {
-        const [[events], [role]] = await Promise.all([
-            dbAll(db, sql, timeStart, timeEnd, ...eventTags),
+        const [[events], role] = await Promise.all([
+            dbAll(db, sql, search.timeStart, search.timeEnd, ...eventTags),
             userId === null ? 0 : dbGet(db, 'SELECT role FROM users WHERE id = ?', userId).then(user => user[0].role)
         ]);
         return [200, {
