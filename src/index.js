@@ -63,7 +63,7 @@ function getPage(pagePath) {
         readFile(`./pages/${pagePath}.html`, 'utf-8'),
         existsSync(`./public/pageScripts/${pagePath}.js`)
     ]).then(function([main, page, hasScript]) {
-        return main.replace('{{content}}', page).replace('{{head}}', hasScript ? `<script src="/pageScripts/${pagePath}.js" defer></script>` : '');
+        return main.replace('{{content}}', page).replace('{{head}}', hasScript ? `<script src="/pageScripts/${pagePath}.js" type="module" defer></script>` : '');
     });
 }
 

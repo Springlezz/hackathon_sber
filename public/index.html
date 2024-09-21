@@ -5,8 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Hackathon App</title>
         <link rel="stylesheet" href="/styles.css">
-        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
-        <script src="/script.js"></script>
+        <script src="/scripts/index.js" type="module" defer></script>
         {{head}}
     </head>
     <body>
@@ -28,7 +27,7 @@
                     </div>
                     <div class="buttons">
                         <a href="#" class="button">Добавить событие</a>
-                        <a onclick="clickFilters();" class="button" style="cursor: pointer;">Фильтры</a>
+                        <a id="open-filters" class="button" style="cursor: pointer;">Фильтры</a>
                         <div id="filters"></div>
                     </div>
                 </div>
