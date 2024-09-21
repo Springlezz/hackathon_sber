@@ -1,15 +1,21 @@
-import { existsSync } from 'fs';
 import { readFile } from 'fs/promises';
 import { createServer } from 'http';
 import sqlite3 from 'sqlite3';
 import { gzip } from 'zlib';
 import createTables from './createDB.js';
-import { dbRun } from './db.js';
+import { dbGet, dbRun } from './db.js';
 import { getSession } from './session.js';
 import initTelegramBot from './telegramBot.js';
+import { hashPassword } from './utils.js';
 
 const db = new sqlite3.Database('database.db');
 await createTables(db);
+
+dbGet(db, 'SELECT COUNT(*) as num FROM users').then(function([{ num }]) {
+    if (num) return;
+    dbRun(db, 'INSERT INTO users (role, email, password, first_name, second_name, third_name, country, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 2, 'admin@mail.ru', hashPassword('admin'), 'Главный', 'Админ', '', '-', '-');
+});
+
 // debug
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Программирование', '0,17,229');
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Семья', '255,6,222');
