@@ -22,7 +22,7 @@ async function regTg() {
                 $E('label',{}, [ $T('Отчество'), $E('input',{name: 'tg-thirdName'},[])]),
                 $E('label',{}, [ $T('Страна'), $E('input',{name: 'tg-country', required: true},[])]),
                 $E('label',{}, [ $T('Город'), $E('input',{name: 'tg-city', required: true},[])])
-                ], {'Продолжить': ()=>regTgg(r.code)}));
+                ], {'Продолжить': ()=>regTgg(r.code), 'Закрыть': ()=>d.remove()}));
     }
 }
 
