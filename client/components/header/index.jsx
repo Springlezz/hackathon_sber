@@ -27,7 +27,7 @@ export default function Header(goPage) {
             <button class={styles.button} onClick={() => $toggleClasses(menu, styles.show)}>{info.firstName} {info.secondName}</button>,
             menu
         );
-        $append(headerMenu, createEvent);
+        if (info.role > 0) $append(headerMenu, createEvent);
     }
     function authShowButtons() {
         $clear($auth);
