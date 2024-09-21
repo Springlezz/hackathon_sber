@@ -27,7 +27,7 @@ async function saveSettings() {
     const city = getValue('city');
     let notice = 0;
     if (document.getElementsByName('notice').length) notice = getValue('notice');
-    const r = await postApi('changeSettings', { email, firstName, secondName, thirdName, country, city });
+    const r = await postApi('changeSettings', { email, firstName, secondName, thirdName, country, city, telegramNotifications: notice });
 }
 
 async function changePassword() {

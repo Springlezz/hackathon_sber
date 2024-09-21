@@ -17,9 +17,9 @@ function createCalendar(root) {
     }
 
     for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-        const td = $E('td', { id: 'day' + day }, [$T(day)]);
+        const td = $E('td', { id: 'day' + day, onClick: ()=>{selectDay(day)} }, [$T(day)]);
         $append(row, td);
-        if (now.getDate() === day) $addClasses(td, 'active');
+        if (now.getDate() === day) {$addClasses(td, 'active');$addClasses(td, 'select_day')};
         if ((day + firstDayWeekday) % 7 === 0) {
             $append(root, row);
             row = $E('tr', {}, []);
@@ -34,19 +34,50 @@ function createCalendar(root) {
 
 createCalendar(document.getElementById('calendar-root'));
 
-async function setEventsDay(tags) {
-    const { events } = await getApi('getEvents', { timeStart: Date.now() / 1000 | 0, timeEnd: (Date.now() + 60 * 60 * 24 * 31 * 1000) / 1000 | 0, tags: tags.join(',') });
+const de = document.querySelector('.day-events')
+async function selectDay(day) {
+    for (const e of document.querySelectorAll('td')) {
+        e.className = e.className.replace(' select_day', '')
+    }
+    de.innerHTML = ''
+    let cont = ''
+    let ed = document.querySelector('#day'+day)
+    ed.className = ed.className + ' select_day'
     for (const event of events) {
-        const date = new Date(event.time_created * 1000);
-        if (date.getDate() === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
+        const date = new Date(event.time * 1000);
+        if (date.getDate() === day) {
+            cont = date.toLocaleDateString('ru', {
+                month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            })
+            de.innerHTML += `<li><span>${cont}</span> ${event.title}</li>`
+        };
+    }
+}
+
+let events = []
+async function setEventsDay(tags) {
+    ({ events } = await getApi('getEvents', { timeStart: (Date.now()/1000|0)-86400*14, timeEnd: (Date.now()/1000|0)+86400*14, tags: tags.join(',') }));
+    de.innerHTML = ''
+    let cont = ''
+    for (const event of events) {
+        const date = new Date(event.time * 1000);
+        if (date.getMonth() === new Date().getMonth()) {
             const elem = document.getElementById(`day${date.getDate()}`);
             if (elem.children.length) {
                 const div = elem.querySelector('div');
-                div.textContent = +div.textContent + 1;
+                div.innerText = +div.innerText + 1;
             }
-            else $append(elem, $E('div', { className: 'event_marker' }, [$T(1)]));
+            else $append(elem, $E('div', { class: 'event_marker' }, [$T(1)]));
         }
-        if (event.time_created > Date.now() / 1000 | 0) {
+        if (date.getDate() === new Date().getDate()) {
+            cont = date.toLocaleDateString('ru', {
+                month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            })
+            de.innerHTML += `<li><span>${cont}</span> ${event.title}</li>`
+        };
+        if (event.time > Date.now()/1000|0) {
             $append(
                 document.querySelector('#events>div.upcoming-events>ul'),
                 $E('li', {}, [
@@ -76,6 +107,7 @@ async function selectTag(tag) {
 
     setEventsDay(tags);
 }
+setEventsDay([]);
 
 const $filters = document.getElementById('filters');
 document.getElementById('open-filters').addEventListener('click', function() {
