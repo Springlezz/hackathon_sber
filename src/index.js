@@ -12,6 +12,8 @@ await createTables(db);
 await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Программирование', '0,17,229');
 await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Семья', '255,6,222');
 await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Окружение', '0,228,36');
+await dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 86400, 'Хакатон - открытие', '', 'online');
+await dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 86400, 'Хакатон - закрытие', '', 'online');
 
 const types = {
     txt: 'text/plain; charset=utf-8',
@@ -158,4 +160,9 @@ createServer(function(req, res) {
             else res.writeHead(404).end();
         }
     }
-}).listen(8080);
+}).listen(80);
+
+setInterval(function() {
+    dbRun(db, 'DELETE FROM sessions WHERE expires <= ?', Date.now());
+    dbRun(db, 'DELETE FROM telegram_auth WHERE expires <= ?', Date.now());
+}, 60_000);
