@@ -29,7 +29,7 @@ async function createEvent() {
 
 document.getElementById('create').onclick = createEvent;
 
-const $filters = document.getElementById('createEvent');
+const $filters = document.getElementById('ttags');
 let tags = [];
 async function selectTag(tag) {
     if (tags.includes(tag)) {
@@ -50,6 +50,7 @@ getApi('getTags').then(function({ tags }) {
             id: 'tag' + tag.id,
             onClick: () => selectTag(tag.id)
         }, [$T(tag.name)]);
+        $addClasses($tag,'tag')
         $style($tag, 'borderColor', `rgba(${tag.color},0)`);
         $style($tag, 'backgroundColor', `rgba(${tag.color},.2)`);
         $append($filters, $tag);

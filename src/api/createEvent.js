@@ -1,5 +1,5 @@
 import checkProps from '../checkProps.js';
-import { dbRun } from '../db.js';
+import { dbRun, dbGet } from '../db.js';
 
 export async function post(db, { userId, body }) {
     if (userId === null) return [401, { error: 'Пользователь не авторизован.' }];
