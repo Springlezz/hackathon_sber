@@ -18,11 +18,11 @@ export async function get(db, { userId, search }) {
             if (!isNoNegInt(tag)) return [400, { error: 'Неверный идентификатор тега.' }];
         }
         sql = `
-        SELECT * FROM events
-        JOIN event_tags ON event_tags.event_id = events.id
-        WHERE events.time >= ? AND events.time <= ?
-        AND event_tags.tag_id IN (${eventTags.map(() => '?').join(', ')})
-`;
+            SELECT * FROM events
+            JOIN event_tags ON event_tags.event_id = events.id
+            WHERE events.time >= ? AND events.time <= ?
+            AND event_tags.tag_id IN (${eventTags.map(() => '?').join(', ')})
+        `;
     }
 
     const [[events], role] = await Promise.all([
