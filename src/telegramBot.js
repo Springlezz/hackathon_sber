@@ -67,7 +67,7 @@ export default async function initTelegramBot(db) {
 <b>🌍 Страна:</b> ${user.country}`, { parse_mode: 'HTML' });
                             break;
                         case '🎉 События':
-                            if (!user) return sendMessage(message.chat.id, '❌ Этот телеграм не привязан к аккаунту.');
+                            if (!user) return sendMessage(message.chat.id, '⚠️ Этот телеграм не привязан к аккаунту.');
                             dbAll(db, 'SELECT * FROM events JOIN event_users ON event_users.event_id = events.id WHERE event_users.user_id = ?', user.id).then(function([events]) {
                                 if (events.length === 0) return sendMessage(message.chat.id, '⚠️ У вас нет событий.');
                                 for (const event of events) {
@@ -76,7 +76,7 @@ export default async function initTelegramBot(db) {
                             });
                             break;
                         case '❌ Отвязать аккаунт':
-                            if (!user) return sendMessage(message.chat.id, '❌ Этот телеграм не привязан к аккаунту.');
+                            if (!user) return sendMessage(message.chat.id, '⚠️ Этот телеграм не привязан к аккаунту.');
                             if (user.password === null) return sendMessageWithKeyboard(message.chat.id, '⚠️ Вы не можете отвязать телеграм от аккаунта без пароля.');
                             dbRun(db, 'UPDATE users SET telegram = NULL WHERE id = ?', user.id);
                             sendMessage(message.chat.id, '✅ Вы успешно отвязали свой аккаунт.');
