@@ -15,7 +15,7 @@ async function sendCode() {
                 $T('Напишите боту '),
                 $E('a',{href: 'https://t.me/hakatonkrona_bot'},[$T('@hakatonkrona_bot')]),
                 $T(` в телеграмм следующий код: "${r.code}" и нажмите кнопки "Продолжить"`),
-                ], {'Продолжить': ()=>loginTg(r.code)}));
+                ], {'Продолжить': ()=>loginTg(r.code), 'Закрыть': ()=>d.remove()}));
     }
 }
 

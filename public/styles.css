@@ -124,6 +124,7 @@ label {
     padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .error {
     padding: 15px;
@@ -264,7 +265,7 @@ label {
 #filters:target {
     display: flex;
 }
-#filters p {
+#filters p, #ttags p {
     display: inline-block;
     margin: 0;
     padding: 8px;

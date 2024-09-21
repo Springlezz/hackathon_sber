@@ -1,6 +1,9 @@
 <h1>Создание события</h1>
-<form method="POST">
-    <label>Название: <input name="title" required></label>
-    <label>Описание: <textarea name="description" required></textarea></label>
-    <input type="submit" value="Создать">
-</form>
+<label>Название: <input name="title" required></label>
+<label>Описание: <textarea name="description" required></textarea></label>
+<label>Локация: <input name="location" type="radio" name required value="Круглый стол">Круглый стол<input name="location" type="radio" required value="Переговорная<input">Переговорная<input name="location" type="radio" required value="Главный зал">Главный зал</label>
+<label>Дата проведения (Дата.Месяц): <input name="date" required></label>
+<label>Время проведения (Часы.Минуты): <input name="time" required></label>
+<label>Длительность проведения в часах: <input name="duration" type="number" required></label>
+<label id="ttags">Теги: </label>
+<button class="button" id="create">Создать</button>
