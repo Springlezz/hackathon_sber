@@ -60,8 +60,9 @@ let months = ['Январь', 'Февраль', 'Март', 'Апрель', 'М�
 $('#month').text(months[new Date().getMonth()])
 
 function clickFilters() {
-    if (location.hash === '#filters') { location.hash = ''; } else { location.hash = 'filters'; }
+    if (location.hash === '#filters') { location.hash = '';$('#filters').css({'opacity': 0}) } else { location.hash = 'filters';$('#filters').css({'opacity': 1}) }
 }
+if (location.hash === '#filters') { $('#filters').css({'opacity': 1}) }
 
 setEventsDay([]);
 
