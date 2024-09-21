@@ -24,7 +24,7 @@ const types = {
     html: 'text/html; charset=utf-8',
     css: 'text/css',
     js: 'application/javascript',
-    png: 'image/png',
+    webp: 'image/webp',
     ico: 'image/x-icon',
     svg: 'image/svg+xml',
     ttf: 'font/ttf'

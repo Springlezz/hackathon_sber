@@ -1,5 +1,5 @@
 import { $addClasses, $append, $E, $remove, $style, $T } from '../scripts/dom.js';
-import { getApi } from '../scripts/api.js';
+import { getApi, postApi } from '../scripts/api.js';
 
 function createCalendar(root) {
     const now = new Date();
@@ -101,33 +101,6 @@ getApi('getTags').then(function({ tags }) {
     }
 });
 
-async function regTg() {
-    const r = await getApi('');
-}
-
 function getValue(name) {
     return document.getElementsByName(name)[0].value;
-}
-async function saveSettings() {
-    const email = getValue('email');
-    const firstName = getValue('firstName');
-    const secondName = getValue('secondName');
-    const thirdName = getValue('thridName');
-    const country = getValue('country');
-    const city = getValue('city');
-    let notice = 0;
-    if (document.getElementsByName('notice').length) notice = getValue('notice');
-    const r = await postApi('changeSettings', { email, firstName, secondName, thirdName, country, city });
-}
-
-async function changePassword() {
-    const oldPassword = getValue('old_password');
-    const password = getValue('new_password');
-    const password2 = getValue('new_password2');
-
-    if (password !== password2) { alert('Новый пароль не совпадает с повторением во втором поле'); } else {
-        if (password === oldPassword) { alert('Новый пароль совпадает со старым паролем'); } else {
-            const r = await postApi('changePassword', { oldPassword, password, password2 });
-        }
-    }
 }

@@ -7,8 +7,8 @@ function authShowUser(info) {
     $clear($auth);
     const menu = $E('div', { id: 'menu' }, [
         $E('button', { onClick: () => location.href = '/profile/' }, [$T('Профиль')]),
-        $E('button', {}, [$T('Мои события')]),
-        $E('button', {}, [$T('Настройки')]),
+        $E('button', { onClick: () => location.href = '/my-events/' }, [$T('Мои события')]),
+        $E('button', { onClick: () => location.href = '/settings/' }, [$T('Настройки')]),
         $E('button', {
             onClick() {
                 getApi('logout');

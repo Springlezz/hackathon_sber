@@ -10,12 +10,5 @@
 <label>Новый пароль: <input name="new_password" type="password"></label>
 <label>Повторите пароль: <input name="new_password2" type="password"></label>
 <button onclick="changePassword();">Сменить пароль</button>
-<script>
-if (userInfo.telegram) {
-    $('#content').append($('<label>Уведомление в Телеграмм: <input name="notice" type="checkbox"></label>'))
-} else {
-    $('#content').append($('<button onclick="regTg();" value="Привязать телеграмм"></button>'))
-}
-</script>
 
 <button onclick="saveSettings();">Сохранить изменения</button>
