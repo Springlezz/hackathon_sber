@@ -70,3 +70,31 @@ let colors = {};
 getApi('getTags').then(function(b) {
     for (let e of b.tags) { colors[e.id] = e.color; $('#filters').append($('<p>').attr('id', 'tag' + e.id).text(e.name).click(() => selectTag(e.id)).css({ borderColor: `rgba(${e.color},0)`, backgroundColor: `rgba(${e.color},.2)` })); }
 });
+
+async function regTg() {
+    const r = await getApi('')
+}
+
+async function saveSettings() {
+    let email = $('input[name="email"]')[0].value
+    let firstName = $('input[name="firstName"]')[0].value
+    let secondName = $('input[name="secondName"]')[0].value
+    let thridName = $('input[name="thridName"]')[0].value
+    let country = $('input[name="country"]')[0].value
+    let city = $('input[name="city"]')[0].value
+    let notice = 0
+    if ($('input[name="notice"]').length) {notice = $('input[name="notice"]')[0].value}
+    const r = await postApi('changeSettings', {email, firstName, secondName, thirdName, country, city})
+}
+
+async function changePassword() {
+    let oldPassword = $('input[name="old_password"]')[0].value
+    let password = $('input[name="new_password"]')[0].value
+    let password2 = $('input[name="new_password2"]')[0].value
+
+    if (password!==password2) {alert('Новый пароль не совпадает с повторением во втором поле')} else {
+        if (password===oldPassword) {alert('Новый пароль совпадает со старым паролем')} else {
+            const r = await postApi('changePassword', {oldPassword, password, password2})
+        }
+    }
+}
