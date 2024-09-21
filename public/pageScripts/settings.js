@@ -1,5 +1,5 @@
-import { $addClasses, $append, $E, $remove, $style, $T } from '../scripts/dom.js';
-import { getApi, postApi } from '../scripts/api.js';
+import { getApi, postApi } from '../api.js';
+import { $append, $E, $T } from '../dom.js';
 
 const c = document.getElementById('content');
 const userInfo = await getApi('getUserInfo');
@@ -8,16 +8,16 @@ if (userInfo.linkedTelegram) {
         c,
         $E('label', {}, [
             $T('Уведомление в Телеграмм: '),
-            $E('input', {type:'checkbox',name:'notice'}, [])
+            $E('input', { type: 'checkbox', name: 'notice' }, [])
         ])
-    )
+    );
 } else {
     $append(
         c,
-        $E('button', {onClick: regTg }, [
+        $E('button', { onClick: regTg }, [
             $T('Привязать телеграмм')
         ])
-    )
+    );
 }
 
 async function linkTg() {

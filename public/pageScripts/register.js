@@ -1,5 +1,4 @@
-import { $addClasses, $append, $E, $remove, $style, $T } from '../scripts/dom.js';
-import { getApi, postApi } from '../scripts/api.js';
+import { postApi } from '../api.js';
 
 async function regTg() {
     const r = await postApi('getTelegramCode', {type: 'register'});

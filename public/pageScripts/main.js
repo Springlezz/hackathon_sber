@@ -1,5 +1,5 @@
-import { $addClasses, $append, $E, $remove, $style, $T } from '../scripts/dom.js';
-import { getApi, postApi } from '../scripts/api.js';
+import { getApi } from '../api.js';
+import { $addClasses, $append, $E, $remove, $style, $T } from '../dom.js';
 
 function createCalendar(root) {
     const now = new Date();
