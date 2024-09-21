@@ -14,8 +14,8 @@ await createTables(db);
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Программирование', '0,17,229');
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Семья', '255,6,222');
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Окружение', '0,228,36');
-dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 2, 'Хакатон - открытие', '', 'online');
-dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726829456, 2, 'Хакатон - закрытие', '', 'online');
+dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location, accepted, confirmed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 0, 1726829456, 2, 'Хакатон - открытие', '', 'online', 1, 1);
+dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location, accepted, confirmed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 0, 1726829456, 2, 'Хакатон - закрытие', '', 'online', 1, 1);
 
 initTelegramBot(db);
 
