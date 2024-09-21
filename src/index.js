@@ -34,6 +34,7 @@ const pages = {
     '/': 'main',
     '/login/': 'login',
     '/register/': 'register',
+    '/settings/': 'settings',
     '/create-event/': 'create-event'
 };
 
