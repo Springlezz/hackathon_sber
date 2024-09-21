@@ -1,0 +1,21 @@
+.button {
+    display: inline-block;
+    padding: 10px;
+    background: #C6AC89;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        background: #D4CEC2;
+    }
+
+    &.disabled, &.disabled:hover, &[disabled], &[disabled]:hover {
+        cursor: default;
+        opacity: 0.5;
+    }
+}

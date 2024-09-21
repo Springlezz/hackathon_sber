@@ -1,0 +1,19 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #D4CEC2;
+    border-radius: 5px;
+
+    .error {
+        color: red;
+        font-size: 12px;
+    }
+    .gap {
+        margin-bottom: 10px;
+    }
+}
