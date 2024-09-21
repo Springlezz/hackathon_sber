@@ -34,24 +34,17 @@ function createCalendar(root) {
 
 createCalendar(document.getElementById('calendar-root'));
 
-let tags = [];
-async function selectTag(tag) {
-    for (const elem of document.getElementsByClassName('event_marker')) $remove(elem);
-
-    if (tags.includes(tag)) {
-        $style(document.getElementById(`tag${tag}`), 'borderColor', 'rgba(0,0,0,0)');
-        tags.splice(tags.indexOf(tag), 1);
-    }
-    else {
-        $style(document.getElementById(`tag${tag}`), 'borderColor', `rgba(${colors[tag]},1)`);
-        tags.push(tag);
-    }
-
+async function setEventsDay(tags) {
     const { events } = await getApi('getEvents', { timeStart: Date.now() / 1000 | 0, timeEnd: (Date.now() + 60 * 60 * 24 * 31 * 1000) / 1000 | 0, tags: tags.join(',') });
     for (const event of events) {
         const date = new Date(event.time_created * 1000);
-        if (date.getDate() === new Date().getDate()) {
-            $append(document.getElementById(`day${date.getDate()}`), $E('div', { className: 'event_marker' }, []));
+        if (date.getDate() === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
+            const elem = document.getElementById(`day${date.getDate()}`);
+            if (elem.children.length) {
+                const div = elem.querySelector('div');
+                div.textContent = +div.textContent + 1;
+            }
+            else $append(elem, $E('div', { className: 'event_marker' }, [$T(1)]));
         }
         if (event.time_created > Date.now() / 1000 | 0) {
             $append(
@@ -68,11 +61,31 @@ async function selectTag(tag) {
     }
 }
 
-document.getElementById('open-filters').addEventListener('click', function() {
-    location.hash = location.hash === '#filters' ? '' : 'filters';
-});
+let tags = [];
+async function selectTag(tag) {
+    for (const elem of document.getElementsByClassName('event_marker')) $remove(elem);
+
+    if (tags.includes(tag)) {
+        $style(document.getElementById(`tag${tag}`), 'borderColor', 'rgba(0,0,0,0)');
+        tags.splice(tags.indexOf(tag), 1);
+    }
+    else {
+        $style(document.getElementById(`tag${tag}`), 'borderColor', `rgba(${colors[tag]},1)`);
+        tags.push(tag);
+    }
+
+    setEventsDay(tags);
+}
 
 const $filters = document.getElementById('filters');
+document.getElementById('open-filters').addEventListener('click', function() {
+    location.hash = location.hash === '#filters' ? '' : 'filters';
+    $style($filters, 'opacity', location.hash === '#filters' ? 1 : 0);
+});
+$style($filters, 'opacity', location.hash === '#filters' ? 1 : 0);
+
+const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июнь', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+document.getElementById('month').textContent = months[new Date().getMonth()];
 
 const colors = {};
 getApi('getTags').then(function({ tags }) {

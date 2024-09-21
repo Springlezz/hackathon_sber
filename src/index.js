@@ -10,7 +10,6 @@ import initTelegramBot from './telegramBot.js';
 
 const db = new sqlite3.Database('database.db');
 await createTables(db);
-
 // debug
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Программирование', '0,17,229');
 dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Семья', '255,6,222');
@@ -165,7 +164,7 @@ createServer(function(req, res) {
             else res.writeHead(404).end();
         }
     }
-}).listen(8080);
+}).listen(80);
 
 setInterval(function() {
     dbRun(db, 'DELETE FROM sessions WHERE expires <= ?', Date.now());

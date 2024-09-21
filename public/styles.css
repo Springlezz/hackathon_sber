@@ -231,8 +231,7 @@ label {
 }
 
 #filters {
-    display: flex;
-    visibility: hidden;
+    display: none;
     flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 5px;
@@ -241,8 +240,7 @@ label {
     transition: opacity 0.5s;
 }
 #filters:target {
-    opacity: 1;
-    visibility: visible;
+    display: flex;
 }
 #filters p {
     display: inline-block;
