@@ -38,7 +38,7 @@ export default function Main({ setTitle, mainAppend, goPage }) {
         }
 
         for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-            const marker = <></>;
+            const marker = <div class={styles.marker} />;
             const thisDay = new Date(year, month, day);
 
             function click() {
@@ -49,7 +49,7 @@ export default function Main({ setTitle, mainAppend, goPage }) {
                 getEvents(currentDay);
             }
 
-            const td = <td class={styles.day} onClick={click}>{day}<div class={styles.marker}>{marker}</div></td>;
+            const td = <td class={styles.day} onClick={click}>{day}{marker}</td>;
 
             if (today.getDate() === day && today.getMonth() === month && today.getFullYear() === year) {
                 $addClasses(td, styles.today);
@@ -75,12 +75,11 @@ export default function Main({ setTitle, mainAppend, goPage }) {
     }
 
     async function getEvents(date) {
-        while (calendarMarkers.length) $remove(calendarMarkers.pop());
         $clear($events);
 
         const { events } = await getApi('getEvents', {
-            timeStart: date / 1000 | 0,
-            timeEnd: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1) / 1000 | 0,
+            timeStart: new Date(date.getFullYear(), date.getMonth(), 1) / 1000 | 0,
+            timeEnd: new Date(date.getFullYear(), date.getMonth() + 1, 0) / 1000 | 0,
             tags: selectedTags.join(',')
         });
 
@@ -95,6 +94,8 @@ export default function Main({ setTitle, mainAppend, goPage }) {
             const day = eventDate.getDate() - 1;
             if (dayEvents[day] > 0) dayEvents[day] += 1;
             else dayEvents[day] = 1;
+
+            if (eventDate.getDate() !== date.getDate()) continue;
 
             const eventLocaleDate = eventDate.toLocaleDateString('ru', {
                 month: '2-digit', day: '2-digit',
