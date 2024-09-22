@@ -36,7 +36,7 @@ export default function CreateEvent({ setTitle, mainAppend }) {
             title: title.value,
             description: description.value,
             location: location.value,
-            date: new Date(date.value + ' ' + time.value).getTime() / 1000 | 0,
+            time: new Date(date.value + ' ' + time.value).getTime() / 1000 | 0,
             duration: duration.value * 60,
             tags: tags.value
         });

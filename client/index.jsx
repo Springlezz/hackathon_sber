@@ -9,6 +9,7 @@ import LinkTelegram from './pages/link-telegram/index.jsx';
 import Login from './pages/login/index.jsx';
 import LoginTelegram from './pages/loginTelegram/index.jsx';
 import Main from './pages/main/index.jsx';
+import MyEvents from './pages/my-events/index.jsx';
 import Register from './pages/register/index.jsx';
 import RegisterTelegram from './pages/registerTelegram/index.jsx';
 import Settings from './pages/settings/index.jsx';
@@ -22,6 +23,7 @@ const routes = {
     '/settings/': Settings,
     '/link-telegram/': LinkTelegram,
     '/create-event/': CreateEvent,
+    '/my-events/': MyEvents,
     '/event/': Event
 };
 

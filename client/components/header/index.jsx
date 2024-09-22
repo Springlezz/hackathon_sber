@@ -6,6 +6,7 @@ import styles from './styles.scss';
 export default function Header(goPage) {
     const $auth = <div class={styles.auth} />;
 
+    const myEvents = <Link class={styles.button} href="/my-events/" onClick={goPage}>Мои события</Link>;
     const createEvent = <Link class={styles.button} href="/create-event/" onClick={goPage}>Создать событие</Link>;
     const headerMenu = <div class={styles.headerMenu}><Link class={styles.logo} href="/" onClick={goPage} /></div>;
 
@@ -14,7 +15,6 @@ export default function Header(goPage) {
         const menu = (
             <div class={styles.menu} onClick={() => $toggleClasses(menu, styles.show)}>
                 <Link class={styles.button} href="/profile/" onClick={goPage}>Профиль</Link>
-                <Link class={styles.button} href="/my-events/" onClick={goPage}>Мои события</Link>
                 <Link class={styles.button} href="/settings/" onClick={goPage}>Настройки</Link>
                 <button class={styles.button} onClick={function() {
                     getApi('logout');
@@ -27,6 +27,8 @@ export default function Header(goPage) {
             <button class={styles.button} onClick={() => $toggleClasses(menu, styles.show)}>{info.firstName} {info.secondName}</button>,
             menu
         );
+
+        $append(headerMenu, myEvents);
         if (info.role > 0) $append(headerMenu, createEvent);
     }
     function authShowButtons() {
@@ -35,6 +37,7 @@ export default function Header(goPage) {
             <Link class={styles.button} href="/login/" onClick={goPage}>Вход</Link>,
             <Link class={styles.button} href="/register/" onClick={goPage}>Регистрация</Link>
         );
+        $remove(myEvents);
         $remove(createEvent);
     }
 

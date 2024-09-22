@@ -1,7 +1,7 @@
 import btnStyles from '../../components/button.scss';
-import Link from '../../components/link.jsx';
+import Event from '../../components/event/index.jsx';
 import { getApi } from '../../lib/api.js';
-import { $addClasses, $append, $clear, $hasClasses, $remove, $removeClasses, $style, $toggleClasses } from '../../lib/dom.js';
+import { $addClasses, $append, $clear, $hasClasses, $removeClasses, $style, $toggleClasses } from '../../lib/dom.js';
 import styles from './styles.scss';
 
 const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июнь', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
@@ -90,21 +90,9 @@ export default function Main({ setTitle, mainAppend, goPage }) {
             if (dayEvents[day] > 0) dayEvents[day] += 1;
             else dayEvents[day] = 1;
 
-            if (eventDate.getDate() !== date.getDate()) continue;
-
-            const eventLocaleDate = eventDate.toLocaleDateString('ru', {
-                month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit'
-            });
-
-            $append(
-                $events,
-                <Link class={styles.event} href={`/event/?id=${event.id}`} onClick={goPage}>
-                    <div class={styles.title}>{event.title}</div>
-                    <div class={styles.info}>{eventLocaleDate}, {event.duration / 60} минут, {event.location}</div>
-                    <div class={styles.description}>{event.description}</div>
-                </Link>
-            );
+            if (eventDate.getDate() === date.getDate()) {
+                $append($events, Event(event, goPage));
+            }
         }
         for (const day in calendarMarkers) {
             if (dayEvents[day] > 0) {
