@@ -48,7 +48,7 @@ createServer(function(req, res) {
         else res.writeHead(code, headers).end(data);
     }
 
-    const url = new URL(req.url, 'http://localhost');
+    const url = new URL(req.url, 'http://127.0.0.1');
     let path = url.pathname;
 
     let token = null;
