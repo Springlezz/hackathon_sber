@@ -62,7 +62,7 @@ const tables = {
     ],
     telegram_auth: [
         'id INTEGER PRIMARY KEY AUTOINCREMENT',
-        'type INTEGER NOT NULL', // 0 - login, 1 - registration
+        'type INTEGER NOT NULL', // 0 - login, 1 - registration, 2 - link
         'code TEXT NOT NULL',
         'telegram INTEGER',
         'expires INTEGER NOT NULL'
