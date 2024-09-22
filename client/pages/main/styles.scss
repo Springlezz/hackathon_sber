@@ -43,11 +43,15 @@
 
                 &.day {
                     cursor: pointer;
+
+                    &:hover {
+                        box-shadow: inset 0 0 0 2px #908281;
+                    }
                 }
                 &.today {
                     background-color: #F83;
                 }
-                &.active {
+                &.active, &.active:hover {
                     box-shadow: inset 0 0 0 2px black;
                 }
                 .marker {
@@ -100,10 +104,12 @@
     }
     .filter {
         width: 300px;
+        overflow: hidden;
 
         .tags {
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             gap: 5px;
             padding: 10px;
             border: 1px solid #D4CEC2;

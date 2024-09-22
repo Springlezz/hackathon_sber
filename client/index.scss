@@ -16,15 +16,18 @@ body {
 }
 h1, h2, h3 {
     text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .main {
-    width: 80%;
     max-width: 1000px;
     margin: auto;
     padding: 30px;
     background: white;
     border-radius: 20px;
+    overflow: hidden;
 
     .title {
         display: block;
