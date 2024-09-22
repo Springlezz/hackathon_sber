@@ -1,80 +1,88 @@
-<<<<<<< HEAD
+import Header from './components/header/index.jsx';
+import styles from './index.scss';
 import { getApi } from './lib/api.js';
-import { $append, $clear, $toggleClasses } from './lib/dom.js';
+import { $T, $append, $remove } from './lib/dom.js';
+import CreateEvent from './pages/create-event/index.jsx';
+import Error404 from './pages/error404/index.jsx';
+import Event from './pages/event/index.jsx';
+import Login from './pages/login/index.jsx';
+import LoginTelegram from './pages/loginTelegram/index.jsx';
+import Main from './pages/main/index.jsx';
+import Register from './pages/register/index.jsx';
+import RegisterTelegram from './pages/registerTelegram/index.jsx';
+import Settings from './pages/settings/index.jsx';
 
-const $auth = document.getElementById('auth');
+const routes = {
+    '/': Main,
+    '/login/': Login,
+    '/register/': Register,
+    '/login/telegram/': LoginTelegram,
+    '/register/telegram/': RegisterTelegram,
+    '/settings/': Settings,
+    '/create-event/': CreateEvent,
+    '/event/': Event
+};
 
-function authShowUser(info) {
-    $clear($auth);
-    const menu = (
-        <div id="menu">
-            <button onClick={() => location.href = '/profile/'}>Профиль</button>
-            <button onClick={() => location.href = '/my-events/'}>Мои события</button>
-            <button onClick={() => location.href = '/settings/'}>Настройки</button>
-            <button onClick={function() {
-                getApi('logout');
-                authShowButtons();
-            }}>Выход</button>
-        </div>
-    );
-    $append(
-        $auth,
-        <button onClick={() => $toggleClasses(menu, 'show')}>{info.firstName} {info.secondName}</button>,
-        menu
-    );
-}
-function authShowButtons() {
-    $clear($auth);
-    $auth.append(
-        <button onClick={() => location.href = '/login/'}>Вход</button>,
-        <button onClick={() => location.href = '/register/'}>Регистрация</button>
-    );
-}
+const [header, showMenu, authShowButtons] = Header(goPage);
+$append(document.body, header);
 
 getApi('getUserInfo').then(function(info) {
-    if (info.error) {authShowButtons();document.querySelector('.buttons>a').remove()}
-    else {
-        authShowUser(info);
-        if (info.role!==1) document.querySelector('.buttons>a').remove();
-    }
-=======
-import { getApi } from './lib/api.js';
-import { $append, $clear, $toggleClasses } from './lib/dom.js';
-
-const $auth = document.getElementById('auth');
-
-function authShowUser(info) {
-    $clear($auth);
-    const menu = (
-        <div id="menu">
-            <button onClick={() => location.href = '/profile/'}>Профиль</button>
-            <button onClick={() => location.href = '/my-events/'}>Мои события</button>
-            <button onClick={() => location.href = '/settings/'}>Настройки</button>
-            <button onClick={function() {
-                getApi('logout');
-                authShowButtons();
-            }}>Выход</button>
-        </div>
-    );
-    $append(
-        $auth,
-        <button onClick={() => $toggleClasses(menu, 'show')}>{info.firstName} {info.secondName}</button>,
-        menu
-    );
-}
-function authShowButtons() {
-    $clear($auth);
-    $auth.append(
-        <button onClick={() => location.href = '/login/'}>Вход</button>,
-        <button onClick={() => location.href = '/register/'}>Регистрация</button>
-    );
-}
-
-getApi('getUserInfo').then(function(info) {
-    if (info.error) {authShowButtons();document.querySelector('.buttons>a').remove()}
-    else {
-        authShowUser(info);
-        if (info.role!==1) document.querySelector('.buttons>a').remove();
-    }
->>>>>>> faf378372313bad17c916403a2dc44ae1b894066
+    if (info.error) authShowButtons();
+    else showMenu(info);
 });
+
+let isAuthorized = false;
+function authorized(auth) {
+    if (typeof auth === 'boolean') {
+        isAuthorized = auth;
+        if (auth) getApi('getUserInfo').then(showMenu);
+        else authShowButtons();
+    }
+    return isAuthorized;
+}
+
+function goPage(path) {
+    history.pushState(null, null, path);
+    loadRoutes();
+}
+
+let lastMain;
+function loadRoutes() {
+    if (lastMain) $remove(lastMain);
+
+    const titleText = $T();
+    const main = <div class={styles.main}>
+        <h1 class={styles.title}>{titleText}</h1>
+    </div>;
+
+    lastMain = main;
+    $append(document.body, lastMain);
+
+    function setTitle(newTitle) {
+        titleText.textContent = newTitle || '';
+        document.title = (newTitle ? newTitle + ' — ' : '') + 'Hackathon App';
+    }
+    function mainAppend(children) {
+        $append(main, children);
+    }
+    function headerAppend(children) {
+        $append(header, children);
+    }
+    function setBack(path) {
+        if (path) backBtn.href = path;
+        else backBtn.removeAttribute('href');
+    }
+
+    let page = Error404;
+    if (routes[location.pathname]) {
+        page = routes[location.pathname];
+    }
+
+    page({
+        setTitle, setBack, mainAppend, headerAppend,
+        authorized, goPage
+    });
+}
+
+addEventListener('popstate', loadRoutes);
+loadRoutes();

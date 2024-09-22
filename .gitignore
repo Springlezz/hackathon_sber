@@ -1,3 +1,5 @@
 node_modules
 push.bat
 database.db
+public/bundle.js
+public/styles.css
