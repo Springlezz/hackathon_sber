@@ -1,0 +1,51 @@
+.input {
+    flex: 1;
+    margin-left: 6px;
+    border: 1px solid #D4CEC2;
+    border-radius: 5px;
+    padding: 5px 10px;
+
+    &:focus {
+        outline: 1px solid #D4CEC2;
+    }
+}
+.checkbox {
+    height: 20px;
+    width: 20px;
+    margin-left: 10px;
+    border: 1px solid #D4CEC2;
+    border-radius: 5px;
+    cursor: pointer;
+    appearance: none;
+
+    &:hover {
+        outline: 1px solid #D4CEC2;
+    }
+    &:checked {
+        position: relative;
+        background: #D4CEC2;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 11px;
+            left: -1px;
+            width: 8px;
+            height: 4px;
+            transform-origin: bottom right;
+            transform: rotate(40deg);
+            background: white;
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 2px;
+            width: 4px;
+            height: 14px;
+            transform-origin: bottom right;
+            transform: rotate(40deg);
+            background: white;
+        }
+    }
+}
