@@ -1,28 +1,29 @@
 import btnStyles from '../../components/button.scss';
 import formStyles from '../../components/form.scss';
+import inpStyles from '../../components/input.scss';
 import { postApi } from '../../lib/api.js';
 
 export default function CreateEvent({ setTitle, mainAppend }) {
     setTitle('Создание события');
 
-    const title = <input type="text" required />;
-    const description = <textarea required />;
-    const location = <input type="text" required />;
-    const date = <input type="date" required />;
-    const time = <input type="time" required />;
-    const duration = <input type="number" required />;
-    const tags = <input type="text" />;
+    const title = <input class={inpStyles.input} type="text" required />;
+    const description = <textarea class={inpStyles.input} required />;
+    const location = <input class={inpStyles.input} type="text" required />;
+    const date = <input class={inpStyles.input} type="date" required />;
+    const time = <input class={inpStyles.input} type="time" required />;
+    const duration = <input class={inpStyles.input} type="number" required />;
+    const tags = <input class={inpStyles.input} type="text" />;
 
     const $error = <></>;
     const form = (
         <form class={formStyles.form}>
-            <label>Название: {title}</label>
-            <label>Описание: {description}</label>
-            <label>Локация: {location}</label>
-            <label>Дата: {date}</label>
-            <label>Время: {time}</label>
-            <label>Длительность (мин): {duration}</label>
-            <label>Теги (через запятую): {tags}</label>
+            <label class={formStyles.label}>Название: {title}</label>
+            <label class={formStyles.label}>Описание: {description}</label>
+            <label class={formStyles.label}>Локация: {location}</label>
+            <label class={formStyles.label}>Дата: {date}</label>
+            <label class={formStyles.label}>Время: {time}</label>
+            <label class={formStyles.label}>Длительность (мин): {duration}</label>
+            <label class={formStyles.label}>Теги (через запятую): {tags}</label>
             <div class={formStyles.error}>{$error}</div>
             <input type="submit" value="Создать событие" class={btnStyles.button} onClick={create} />
         </form>

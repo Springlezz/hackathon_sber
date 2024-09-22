@@ -70,10 +70,3 @@ export function $hasClasses(elem, ...classes) {
     const oldClasses = elem.className.split(' ');
     return classes.every(c => oldClasses.includes(c));
 }
-
-export function $hide(elem) {
-    $style(elem, 'display', 'none');
-}
-export function $show(elem) {
-    $style(elem, 'display', '');
-}

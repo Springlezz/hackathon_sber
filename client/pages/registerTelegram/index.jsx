@@ -1,20 +1,21 @@
 import btnStyles from '../../components/button.scss';
 import formStyles from '../../components/form.scss';
+import inpStyles from '../../components/input.scss';
 import Link from '../../components/link.jsx';
 import { getApi, postApi } from '../../lib/api.js';
-import { $append, $clear, $E } from '../../lib/dom.js';
+import { $append, $clear } from '../../lib/dom.js';
 
 export default function RegisterTelegram({ setTitle, mainAppend, authorized, goPage }) {
     setTitle('Регистрация через Telegram');
 
     let code;
 
-    const firstName = <input type="text" required />;
-    const secondName = <input type="text" required />;
-    const thirdName = <input type="text" />;
+    const firstName = <input class={inpStyles.input} type="text" required />;
+    const secondName = <input class={inpStyles.input} type="text" required />;
+    const thirdName = <input class={inpStyles.input} type="text" />;
 
-    const city = <input type="text" required />;
-    const country = <input type="text" required />;
+    const city = <input class={inpStyles.input} type="text" required />;
+    const country = <input class={inpStyles.input} type="text" required />;
 
     const info = <div>Загрузка...</div>;
     const $error = <></>;
@@ -22,11 +23,11 @@ export default function RegisterTelegram({ setTitle, mainAppend, authorized, goP
     const form = (
         <form class={formStyles.form}>
             {info}
-            <label>Имя: {firstName}</label>
-            <label>Фамилия: {secondName}</label>
-            <label class={formStyles.gap}>Отчество: {thirdName}</label>
-            <label>Город: {city}</label>
-            <label>Страна: {country}</label>
+            <label class={formStyles.label}>Имя: {firstName}</label>
+            <label class={formStyles.label}>Фамилия: {secondName}</label>
+            <label classes={[formStyles.label, formStyles.gap]}>Отчество: {thirdName}</label>
+            <label class={formStyles.label}>Город: {city}</label>
+            <label class={formStyles.label}>Страна: {country}</label>
             <div class={formStyles.error}>{$error}</div>
             {submit}
             <Link class={btnStyles.button} href="/register/" onClick={goPage}>Зарегистрироваться с паролем</Link>

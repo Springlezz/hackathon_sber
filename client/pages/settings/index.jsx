@@ -1,32 +1,33 @@
 import btnStyles from '../../components/button.scss';
 import formStyles from '../../components/form.scss';
+import inpStyles from '../../components/input.scss';
 import { getApi, postApi } from '../../lib/api.js';
 import { $append } from '../../lib/dom.js';
 
 export default function Settings({ setTitle, mainAppend, authorized, goPage }) {
     setTitle('Настройки');
 
-    const email = <input type="email" required />;
+    const email = <input class={inpStyles.input} type="email" required />;
 
-    const firstName = <input type="text" required />;
-    const secondName = <input type="text" required />;
-    const thirdName = <input type="text" />;
+    const firstName = <input class={inpStyles.input} type="text" required />;
+    const secondName = <input class={inpStyles.input} type="text" required />;
+    const thirdName = <input class={inpStyles.input} type="text" />;
 
-    const city = <input type="text" required />;
-    const country = <input type="text" required />;
+    const city = <input class={inpStyles.input} type="text" required />;
+    const country = <input class={inpStyles.input} type="text" required />;
 
-    const tgNotifications = <input type="checkbox" />;
-    const tgNotificationsLabel = <label style="display:none">Уведомления в Telegram: {tgNotifications}</label>;
+    const tgNotifications = <input class={inpStyles.checkbox} type="checkbox" />;
+    const tgNotificationsLabel = <label class={formStyles.label} style="display:none">Уведомления в Telegram: {tgNotifications}</label>;
 
     const $error = <></>;
     const form = (
         <form class={formStyles.form}>
-            <label class={formStyles.gap}>Почта: {email}</label>
-            <label>Имя: {firstName}</label>
-            <label>Фамилия: {secondName}</label>
-            <label class={formStyles.gap}>Отчество: {thirdName}</label>
-            <label>Город: {city}</label>
-            <label class={formStyles.gap}>Страна: {country}</label>
+            <label classes={[formStyles.label, formStyles.gap]}>Почта: {email}</label>
+            <label class={formStyles.label}>Имя: {firstName}</label>
+            <label class={formStyles.label}>Фамилия: {secondName}</label>
+            <label classes={[formStyles.label, formStyles.gap]}>Отчество: {thirdName}</label>
+            <label class={formStyles.label}>Город: {city}</label>
+            <label classes={[formStyles.label, formStyles.gap]}>Страна: {country}</label>
             {tgNotificationsLabel}
             <div class={formStyles.error}>{$error}</div>
             <input type="submit" value="Сохранить" class={btnStyles.button} onClick={register} />
