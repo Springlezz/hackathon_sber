@@ -5,6 +5,7 @@ import { $T, $append, $remove } from './lib/dom.js';
 import CreateEvent from './pages/create-event/index.jsx';
 import Error404 from './pages/error404/index.jsx';
 import Event from './pages/event/index.jsx';
+import LinkTelegram from './pages/link-telegram/index.jsx';
 import Login from './pages/login/index.jsx';
 import LoginTelegram from './pages/loginTelegram/index.jsx';
 import Main from './pages/main/index.jsx';
@@ -19,6 +20,7 @@ const routes = {
     '/login/telegram/': LoginTelegram,
     '/register/telegram/': RegisterTelegram,
     '/settings/': Settings,
+    '/link-telegram/': LinkTelegram,
     '/create-event/': CreateEvent,
     '/event/': Event
 };

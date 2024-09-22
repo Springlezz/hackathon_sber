@@ -20,8 +20,8 @@ dbGet(db, 'SELECT COUNT(*) as num FROM users').then(function([{ num }]) {
 await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Программирование', '0,17,229');
 await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Семья', '255,6,222');
 await dbRun(db, 'INSERT INTO tags (name, color) VALUES (?, ?)', 'Окружение', '0,228,36');
-await dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726714800, 60 * 20, 'Хакатон от Кроны - открытие', 'Участники будут работать над созданием инновационных решений, которые помогут улучшить управление событиями, повысить эффективность коммуникации и оптимизировать процессы внутри клуба. В ходе хакатона команды будут иметь возможность консультироваться с экспертами, получать обратную связь и совершенствовать свои проекты.', 'online');
-await dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location, accepted, confirmed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 0, 1727002800, 60 * 60, 'Хакатон от Кроны - закрытие', 'Событие, где мы получим последнее место :(', 'online', 1, 1);
+await dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location) VALUES (?, ?, ?, ?, ?, ?)', 0, 1726714800, 60 * 20, 'Хакатон от Кроны - открытие', 'Участники будут работать над созданием инновационных решений, которые помогут улучшить управление событиями, повысить эффективность коммуникации и оптимизировать процессы внутри клуба. В ходе хакатона команды будут иметь возможность консультироваться с экспертами, получать обратную связь и совершенствовать свои проекты.', 'Школа 21');
+await dbRun(db, 'INSERT INTO events (creator, time, duration, title, description, location, accepted, confirmed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 0, 1727002800, 60 * 60, 'Хакатон от Кроны - закрытие', 'Событие, где мы получим последнее место :(', 'Школа 21', 1, 1);
 await dbRun(db, 'INSERT INTO event_tags (event_id, tag_id) VALUES (?, ?)', 1, 1);
 await dbRun(db, 'INSERT INTO event_tags (event_id, tag_id) VALUES (?, ?)', 2, 1);
 

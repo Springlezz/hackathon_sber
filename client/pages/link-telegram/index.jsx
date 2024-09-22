@@ -1,11 +1,10 @@
 import btnStyles from '../../components/button.scss';
 import formStyles from '../../components/form.scss';
-import Link from '../../components/link.jsx';
 import { getApi, postApi } from '../../lib/api.js';
 import { $append, $clear, $E } from '../../lib/dom.js';
 
 export default function LoginTelegram({ setTitle, mainAppend, authorized, goPage }) {
-    setTitle('Вход через Telegram');
+    setTitle('Привязка Telegram');
 
     let code;
 
@@ -17,11 +16,10 @@ export default function LoginTelegram({ setTitle, mainAppend, authorized, goPage
             {info}
             <div class={formStyles.error}>{$error}</div>
             {submit}
-            <Link class={btnStyles.button} href="/login/" onClick={goPage}>Войти по паролю</Link>
         </form>
     );
 
-    getApi('getTelegramCode', { type: 'login' }).then(function({ error, code: c }) {
+    getApi('getTelegramCode', { type: 'link' }).then(function({ error, code: c }) {
         $clear(info);
         if (error) $error.textContent = error;
         else {
@@ -35,12 +33,9 @@ export default function LoginTelegram({ setTitle, mainAppend, authorized, goPage
     async function login(event) {
         event.preventDefault();
 
-        const { error } = await postApi('loginTelegram', { code });
+        const { error } = await postApi('linkTelegram', { code });
         if (error) $error.textContent = 'Вы не ввели код в Telegram.';
-        else {
-            authorized(true);
-            goPage('/');
-        }
+        else goPage('/settings/');
     }
 
     mainAppend(form);

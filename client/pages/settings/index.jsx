@@ -1,8 +1,9 @@
 import btnStyles from '../../components/button.scss';
 import formStyles from '../../components/form.scss';
 import inpStyles from '../../components/input.scss';
+import Link from '../../components/link.jsx';
 import { getApi, postApi } from '../../lib/api.js';
-import { $append } from '../../lib/dom.js';
+import { $append, $remove } from '../../lib/dom.js';
 
 export default function Settings({ setTitle, mainAppend, authorized, goPage }) {
     setTitle('Настройки');
@@ -36,7 +37,7 @@ export default function Settings({ setTitle, mainAppend, authorized, goPage }) {
 
     getApi('getUserInfo').then(function(info) {
         if (info.error) {
-            $error.textContent = error;
+            $error.textContent = info.error;
             return;
         }
         else {
@@ -51,6 +52,20 @@ export default function Settings({ setTitle, mainAppend, authorized, goPage }) {
                 tgNotifications.checked = info.telegramNotifications;
             }
         }
+
+        async function unLink(event) {
+            event.preventDefault();
+
+            const { error } = await getApi('unLinkTelegram');
+            if (error) return alert(error);
+            $remove(unlinkTg);
+            $append(form, linkTg);
+        }
+
+        const linkTg = <Link class={btnStyles.button} href="/link-telegram/" onClick={goPage}>Привязать Telegram</Link>;
+        const unlinkTg = <button class={btnStyles.button} onClick={unLink}>Отвязать Telegram</button>;
+
+        $append(form, info.linkedTelegram ? unlinkTg : linkTg);
     });
 
     async function register(event) {
