@@ -122,6 +122,10 @@
                 color: white;
                 user-select: none;
                 cursor: pointer;
+
+                &:hover {
+                    border-color: #D4CEC2;
+                }
             }
         }
     }

@@ -11,3 +11,16 @@
     margin: auto;
     margin-top: 20px;
 }
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    span {
+        padding: 5px 10px;
+        border: 2px solid transparent;
+        border-radius: 5px;
+        color: white;
+        user-select: none;
+    }
+}

@@ -83,11 +83,6 @@ export default function Main({ setTitle, mainAppend, goPage }) {
             tags: selectedTags.join(',')
         });
 
-        if (!events || !events.length) {
-            $events.textContent = 'В этот день нет событий.';
-            return;
-        }
-
         const dayEvents = [];
         for (const event of events) {
             const eventDate = new Date(event.time * 1000);
@@ -118,6 +113,10 @@ export default function Main({ setTitle, mainAppend, goPage }) {
             }
             else $removeClasses(calendarMarkers[day], styles.show);
         }
+
+        if (!dayEvents[date.getDate() - 1]) {
+            $events.textContent = 'В этот день нет событий.';
+        }
     }
 
     function changeDay(date) {
@@ -136,14 +135,13 @@ export default function Main({ setTitle, mainAppend, goPage }) {
                     selectedTags.push(tag.id);
                 }
                 else {
-                    $style($tag, 'borderColor', 'rgba(0,0,0,0)');
+                    $style($tag, 'borderColor', '');
                     selectedTags.splice(selectedTags.indexOf(tag.id), 1);
                 }
                 changeDay(currentDay);
             }
 
             const $tag = <div onClick={click}>{tag.name}</div>;
-            $style($tag, 'borderColor', `rgba(${tag.color},0)`);
             $style($tag, 'backgroundColor', `rgba(${tag.color},.2)`);
             $append($tags, $tag);
         }

@@ -15,7 +15,10 @@ export default async function Event({ setTitle, mainAppend }) {
         return;
     }
 
-    const event = await getApi('getEvent', { id: eventId });
+    const [event, { tags }] = await Promise.all([
+        getApi('getEvent', { id: eventId }),
+        getApi('getTags'),
+    ]);
     if (event.error) {
         info.textContent = event.error;
         return;
@@ -34,6 +37,7 @@ export default async function Event({ setTitle, mainAppend }) {
             <div><b>Дата:</b> {eventDate}</div>
             <div><b>Длительность:</b> {event.duration / 60} минут</div>
             <div><b>Локация:</b> {event.location}</div>
+            <div class={styles.tags}>{event.tags.map(tag => tags.find(t => t.id === tag)).map(tag => <span style={`background-color:rgba(${tag.color},.2)`}>{tag.name}</span>)}</div>
         </div>
     );
     mainAppend(<div class={styles.description}>{event.description}</div>);
